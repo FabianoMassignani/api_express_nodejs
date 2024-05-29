@@ -1,5 +1,5 @@
 import { model, Schema, Document } from "mongoose";
-import { product } from "../interfaces/products.interface";
+import { Product } from "../interfaces/products.interface";
 
 const productSchema: Schema = new Schema(
   {
@@ -27,4 +27,4 @@ const productSchema: Schema = new Schema(
   }
 );
 
-export const ProductModel = model<product & Document>("product", productSchema);
+export const ProductModel = model<Product & Document>("product", productSchema);

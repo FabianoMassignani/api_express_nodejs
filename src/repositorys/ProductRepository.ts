@@ -1,4 +1,4 @@
-import { IProductRepository } from "../repositorys/IProductRepository";
+import { IProductRepository } from "./IProductRepository";
 import { ProductModel } from "../models/product.model";
 import { Product } from "../interfaces/products.interface";
 import { NotFoundException } from "../exceptions/not-found";

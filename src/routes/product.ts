@@ -1,7 +1,7 @@
 import { Router } from "express";
 
-import ProductController from "../controllers/productControllerClass";
-import ProductRepository from "../repositorys/ProductRepositoryClass";
+import ProductController from "../controllers/productController";
+import ProductRepository from "../repositorys/ProductRepository";
 import { handleAsyncMethod } from "../middlewares/handleAsyncMethod";
 
 const productRepository = new ProductRepository();
