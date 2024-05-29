@@ -11,21 +11,13 @@ class ProductController {
     this.productRepository = productRepository;
   }
 
-  getProducts = async (
-    _req: Request,
-    res: Response,
-    _next: NextFunction
-  ): Promise<void> => {
+  getProducts = async (_req: Request, res: Response): Promise<void> => {
     const products = await this.productRepository.findAll();
 
     res.status(200).json({ data: products });
   };
 
-  getProductById = async (
-    req: Request,
-    res: Response,
-    _next: NextFunction
-  ): Promise<void> => {
+  getProductById = async (req: Request, res: Response): Promise<void> => {
     const { id } = req.params;
 
     if (!id) {
@@ -40,11 +32,7 @@ class ProductController {
     res.status(200).json({ data: product });
   };
 
-  createProduct = async (
-    req: Request,
-    res: Response,
-    _next: NextFunction
-  ): Promise<void> => {
+  createProduct = async (req: Request, res: Response): Promise<void> => {
     const { nome, descricao, preco, quantidade } = req.body;
 
     if (!nome) {
@@ -89,11 +77,7 @@ class ProductController {
       .json({ data: productCreate, message: "Criado com sucesso" });
   };
 
-  updateProduct = async (
-    req: Request,
-    res: Response,
-    _next: NextFunction
-  ): Promise<void> => {
+  updateProduct = async (req: Request, res: Response): Promise<void> => {
     const { id } = req.params;
     const { nome, descricao, preco, quantidade } = req.body;
 
@@ -152,11 +136,7 @@ class ProductController {
       .json({ data: productUpdate, message: "Atualizado com sucesso" });
   };
 
-  deleteProduct = async (
-    req: Request,
-    res: Response,
-    _next: NextFunction
-  ): Promise<void> => {
+  deleteProduct = async (req: Request, res: Response): Promise<void> => {
     const { id } = req.params;
 
     if (!id) {
