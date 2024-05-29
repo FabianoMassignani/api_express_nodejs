@@ -2,6 +2,7 @@ import { Request, Response, NextFunction } from "express";
 import { BadRequestException } from "../exceptions/bad-request";
 import { ErrorCode } from "../exceptions/root";
 import { IProductRepository } from "../repositorys/IProductRepository";
+import { NotFoundException } from "../exceptions/not-found";
 
 class ProductController {
   private productRepository: IProductRepository;
@@ -95,12 +96,18 @@ class ProductController {
   ): Promise<void> => {
     const { id } = req.params;
     const { nome, descricao, preco, quantidade } = req.body;
-    
+
     if (!id) {
       throw new BadRequestException(
         "Id não informado",
         ErrorCode.INVALID_PARAMS
       );
+    }
+
+    let product = await this.productRepository.findById(id);
+
+    if (!product) {
+      throw new NotFoundException("Product not found", ErrorCode.NOT_FOUND);
     }
 
     if (!nome) {
@@ -131,7 +138,7 @@ class ProductController {
       );
     }
 
-    let product = {
+    product = {
       nome: nome,
       descricao: descricao,
       preco: preco,
@@ -160,6 +167,10 @@ class ProductController {
     }
 
     const product = await this.productRepository.delete(id);
+
+    if (!product) {
+      throw new NotFoundException("Product not found", ErrorCode.NOT_FOUND);
+    }
 
     res.status(200).json({ data: product, message: "Deletado com sucesso" });
   };

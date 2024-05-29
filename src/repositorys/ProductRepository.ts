@@ -20,10 +20,6 @@ class ProductRepository implements IProductRepository {
   findById(id: string): Promise<Product | null> {
     const foundProduct = ProductModel.findById(id);
 
-    if (!foundProduct) {
-      throw new NotFoundException("Product not found", ErrorCode.NOT_FOUND);
-    }
-
     return foundProduct;
   }
 
@@ -38,19 +34,11 @@ class ProductRepository implements IProductRepository {
       new: true,
     });
 
-    if (!updatedProduct) {
-      throw new NotFoundException("Product not found", ErrorCode.NOT_FOUND);
-    }
-
     return updatedProduct;
   }
 
   delete(id: string): Promise<Product | null> {
     const deletedProduct = ProductModel.findByIdAndDelete(id);
-
-    if (!deletedProduct) {
-      throw new NotFoundException("Product not found", ErrorCode.NOT_FOUND);
-    }
 
     return deletedProduct;
   }
