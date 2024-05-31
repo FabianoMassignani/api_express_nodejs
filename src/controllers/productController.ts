@@ -1,4 +1,4 @@
-import { Request, Response, NextFunction } from "express";
+import { Request, Response } from "express";
 import { BadRequestException } from "../exceptions/bad-request";
 import { ErrorCode } from "../exceptions/root";
 import { IProductRepository } from "../repositorys/IProductRepository";
@@ -11,14 +11,14 @@ class ProductController {
     this.productRepository = productRepository;
   }
 
-  getProducts = async (_req: Request, res: Response): Promise<void> => {
+  getProducts = async (_req: Request, res: Response): Promise<Response> => {
     const products = await this.productRepository.findAll();
 
-    res.status(200).json({ data: products });
+    return res.status(200).json({ data: products });
   };
 
-  getProductById = async (req: Request, res: Response): Promise<void> => {
-    const { id } = req.params;
+  getProductById = async (req: Request, res: Response): Promise<Response> => {
+    const id: string = req.params.id as string;
 
     if (!id) {
       throw new BadRequestException(
@@ -29,10 +29,10 @@ class ProductController {
 
     const product = await this.productRepository.findById(id);
 
-    res.status(200).json({ data: product });
+    return res.status(200).json({ data: product });
   };
 
-  createProduct = async (req: Request, res: Response): Promise<void> => {
+  createProduct = async (req: Request, res: Response): Promise<Response> => {
     const { nome, descricao, preco, quantidade } = req.body;
 
     if (!nome) {
@@ -72,13 +72,13 @@ class ProductController {
 
     const productCreate = await this.productRepository.create(product);
 
-    res
+    return res
       .status(201)
       .json({ data: productCreate, message: "Criado com sucesso" });
   };
 
-  updateProduct = async (req: Request, res: Response): Promise<void> => {
-    const { id } = req.params;
+  updateProduct = async (req: Request, res: Response): Promise<Response> => {
+    const id: string = req.params.id as string;
     const { nome, descricao, preco, quantidade } = req.body;
 
     if (!id) {
@@ -123,6 +123,7 @@ class ProductController {
     }
 
     product = {
+      _id: id,
       nome: nome,
       descricao: descricao,
       preco: preco,
@@ -131,12 +132,12 @@ class ProductController {
 
     const productUpdate = await this.productRepository.update(id, product);
 
-    res
+    return res
       .status(200)
       .json({ data: productUpdate, message: "Atualizado com sucesso" });
   };
 
-  deleteProduct = async (req: Request, res: Response): Promise<void> => {
+  deleteProduct = async (req: Request, res: Response): Promise<Response> => {
     const { id } = req.params;
 
     if (!id) {
@@ -152,7 +153,9 @@ class ProductController {
       throw new NotFoundException("Product not found", ErrorCode.NOT_FOUND);
     }
 
-    res.status(200).json({ data: product, message: "Deletado com sucesso" });
+    return res
+      .status(200)
+      .json({ data: product, message: "Deletado com sucesso" });
   };
 }
 

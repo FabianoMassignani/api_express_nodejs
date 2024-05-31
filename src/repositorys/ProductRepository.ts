@@ -1,12 +1,12 @@
 import { IProductRepository } from "./IProductRepository";
 import { ProductModel } from "../models/product.model";
-import { Product } from "../interfaces/products.interface";
+import { Product } from "../interfaces/products/products.interface";
 import { NotFoundException } from "../exceptions/not-found";
 import { ErrorCode } from "../exceptions/root";
 import {
   CreateProductsDto,
   UpdateProductDto,
-} from "../interfaces/products.interface";
+} from "../interfaces/products/products.interface";
 
 class ProductRepository implements IProductRepository {
   constructor() {}

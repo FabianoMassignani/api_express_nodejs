@@ -7,8 +7,8 @@ export const handleHttpException = (
   res: Response,
   _next: NextFunction
 ) => {
-  res.status(error.statusCode).json({
+  return res.status(error.statusCode).json({
     message: error.message,
-    code: error.errorCode,
+    errorCode: error.errorCode,
   });
 };
