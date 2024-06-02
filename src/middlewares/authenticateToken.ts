@@ -3,7 +3,7 @@ import { verify } from "jsonwebtoken";
 import { BadRequestException } from "../exceptions/bad-request";
 import { ErrorCode } from "../exceptions/root";
 
-const authenticate = (
+const authenticateToken = (
   request: Request,
   _response: Response,
   next: NextFunction
@@ -19,13 +19,11 @@ const authenticate = (
 
   const [, token] = authHeader.split(" ");
 
-  try {
-    verify(token, String(process.env.APP_SECRET));
+  const user = verify(token, String(process.env.APP_SECRET));
 
-    next();
-  } catch {
-    throw new BadRequestException("Token inválido", ErrorCode.UNAUTHORIZED);
-  }
+  if (user) return next();
+
+  throw new BadRequestException("Token inválido", ErrorCode.UNAUTHORIZED);
 };
 
-export default authenticate;
+export default authenticateToken;

@@ -3,7 +3,11 @@ export type User = {
   name: string;
   email: string;
   password: string;
-  ativo: boolean;
+  active: boolean;
+};
+
+export type UserLogin = User & {
+  token: string;
 };
 
 export type CreateUserDto = Omit<User, "id">;
