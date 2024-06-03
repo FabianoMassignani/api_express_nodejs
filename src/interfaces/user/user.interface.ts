@@ -7,7 +7,7 @@ export type User = {
 };
 
 export type UserLogin = User & {
-  token: string;
+  accessToken: string;
 };
 
 export type CreateUserDto = Omit<User, "id">;

@@ -49,7 +49,6 @@ class UserController {
 
   login = async (req: Request, res: Response): Promise<Response> => {
     const { email, password } = req.body;
-    const JWT_SECRET = process.env.JWT_SECRET as string;
 
     const user = await this.userRepository.findByEmail(email);
 
@@ -69,18 +68,18 @@ class UserController {
       );
     }
 
-    const token = sign(
+    const accessToken = sign(
       {
         id: user.id,
         email: user.email,
       },
-      JWT_SECRET,
+      process.env.JWT_SECRET as string,
       {
-        expiresIn: "1h",
+        expiresIn: "1min",
       }
     );
 
-    if (!token) {
+    if (!accessToken) {
       throw new BadRequestException(
         "Erro ao gerar token",
         ErrorCode.INTERNAL_SERVER
@@ -92,10 +91,10 @@ class UserController {
       name: user.name,
       email: user.email,
       active: user.active,
-      token: token,
+      accessToken: accessToken,
     } as UserLogin;
 
-    return res.status(200).json({ data });
+    return res.status(200).json(data);
   };
 }
 
