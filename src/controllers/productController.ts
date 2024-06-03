@@ -35,32 +35,13 @@ class ProductController {
   createProduct = async (req: Request, res: Response): Promise<Response> => {
     const { nome, descricao, preco, quantidade } = req.body;
 
-    if (!nome) {
-      throw new BadRequestException(
-        "Nome não informado",
-        ErrorCode.INVALID_PARAMS
-      );
-    }
-
-    if (!descricao) {
-      throw new BadRequestException(
-        "Descrição não informada",
-        ErrorCode.INVALID_PARAMS
-      );
-    }
-
-    if (!preco) {
-      throw new BadRequestException(
-        "Preço não informado",
-        ErrorCode.INVALID_PARAMS
-      );
-    }
-
-    if (!quantidade) {
-      throw new BadRequestException(
-        "Quantidade não informada",
-        ErrorCode.INVALID_PARAMS
-      );
+    for (const key in req.body) {
+      if (!req.body[key]) {
+        throw new BadRequestException(
+          `${key} não informado`,
+          ErrorCode.INVALID_PARAMS
+        );
+      }
     }
 
     let product = {
@@ -94,32 +75,13 @@ class ProductController {
       throw new NotFoundException("Product not found", ErrorCode.NOT_FOUND);
     }
 
-    if (!nome) {
-      throw new BadRequestException(
-        "Nome não informado",
-        ErrorCode.INVALID_PARAMS
-      );
-    }
-
-    if (!descricao) {
-      throw new BadRequestException(
-        "Descrição não informada",
-        ErrorCode.INVALID_PARAMS
-      );
-    }
-
-    if (!preco) {
-      throw new BadRequestException(
-        "Preço não informado",
-        ErrorCode.INVALID_PARAMS
-      );
-    }
-
-    if (!quantidade) {
-      throw new BadRequestException(
-        "Quantidade não informada",
-        ErrorCode.INVALID_PARAMS
-      );
+    for (const key in req.body) {
+      if (!req.body[key]) {
+        throw new BadRequestException(
+          `${key} não informado`,
+          ErrorCode.INVALID_PARAMS
+        );
+      }
     }
 
     product = {
