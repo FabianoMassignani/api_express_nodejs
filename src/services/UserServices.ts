@@ -1,5 +1,5 @@
-import { hashSync, compareSync } from "bcrypt";
-import { sign } from "jsonwebtoken";
+import { generateToken } from "../utils/jwt.utils";
+import { hashPassword, comparePasswords } from "../utils/bcrypt.utils";
 import { BadRequestException } from "../exceptions/bad-request";
 import { NotFoundException } from "../exceptions/not-found";
 import { CreateUserDto, UserLogin } from "../interfaces/user/user.interface";
@@ -33,7 +33,7 @@ class UserService {
       );
     }
 
-    data.password = hashSync(password, 10);
+    data.password = hashPassword(password);
 
     const user = await this.userRepository.create(data);
 
@@ -50,7 +50,7 @@ class UserService {
       );
     }
 
-    const isValidPassword = compareSync(password, user.password);
+    const isValidPassword = comparePasswords(password, user.password);
 
     if (!isValidPassword) {
       throw new BadRequestException(
@@ -59,23 +59,10 @@ class UserService {
       );
     }
 
-    const accessToken = sign(
-      {
-        id: user.id,
-        email: user.email,
-      },
-      process.env.JWT_SECRET as string,
-      {
-        expiresIn: "1min",
-      }
-    );
-
-    if (!accessToken) {
-      throw new BadRequestException(
-        "Erro ao gerar token",
-        ErrorCode.INTERNAL_SERVER
-      );
-    }
+    const accessToken = generateToken({
+      id: user.id,
+      email: user.email,
+    });
 
     const data: UserLogin = {
       name: user.name,
