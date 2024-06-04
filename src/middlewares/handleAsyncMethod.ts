@@ -2,7 +2,7 @@ import { Request, Response, NextFunction } from "express";
 import { InternalException } from "../exceptions";
 import { ErrorCode, HttpException } from "../exceptions/root";
 
-const handleAsyncMethod = (method: Function) => {
+const asyncMethod = (method: Function) => {
   return async (req: Request, res: Response, next: NextFunction) => {
     try {
       await method(req, res, next);
@@ -26,4 +26,4 @@ const handleAsyncMethod = (method: Function) => {
   };
 };
 
-export default handleAsyncMethod;
+export default asyncMethod;

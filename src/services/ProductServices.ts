@@ -1,4 +1,4 @@
-import { NotFoundException, BadRequestException } from "../exceptions";
+import { NotFound, BadRequest } from "../exceptions";
 import { ErrorCode } from "../exceptions/root";
 import { IProductRepository } from "../repositorys/ProductIRepository";
 import { Product } from "../interfaces/products/products.interface";
@@ -16,19 +16,13 @@ class ProductService {
 
   async getById(id: string): Promise<Product> {
     if (!id) {
-      throw new BadRequestException(
-        "Id não informado",
-        ErrorCode.INVALID_PARAMS
-      );
+      throw new BadRequest("Id não informado", ErrorCode.BAD_REQUEST);
     }
 
     const product = await this.productRepository.findById(id);
 
     if (!product) {
-      throw new NotFoundException(
-        "Produto não encontrado",
-        ErrorCode.NOT_FOUND
-      );
+      throw new NotFound("Produto não encontrado", ErrorCode.NOT_FOUND);
     }
 
     return product;
@@ -37,20 +31,14 @@ class ProductService {
   async create(productData: Partial<Product>): Promise<Product> {
     for (const key in productData) {
       if (!productData[key as keyof Product]) {
-        throw new BadRequestException(
-          `${key} não informado`,
-          ErrorCode.INVALID_PARAMS
-        );
+        throw new BadRequest(`${key} não informado`, ErrorCode.BAD_REQUEST);
       }
     }
 
     const product = await this.productRepository.create(productData as Product);
 
     if (!product) {
-      throw new BadRequestException(
-        "Produto não criado",
-        ErrorCode.INVALID_PARAMS
-      );
+      throw new BadRequest("Produto não criado", ErrorCode.BAD_REQUEST);
     }
 
     return product;
@@ -58,37 +46,25 @@ class ProductService {
 
   async update(id: string, productData: Partial<Product>): Promise<Product> {
     if (!id) {
-      throw new BadRequestException(
-        "Id não informado",
-        ErrorCode.INVALID_PARAMS
-      );
+      throw new BadRequest("Id não informado", ErrorCode.BAD_REQUEST);
     }
 
     let product = await this.productRepository.findById(id);
 
     if (!product) {
-      throw new NotFoundException(
-        "Produto não encontrado",
-        ErrorCode.NOT_FOUND
-      );
+      throw new NotFound("Produto não encontrado", ErrorCode.NOT_FOUND);
     }
 
     for (const key in productData) {
       if (!productData[key as keyof Product]) {
-        throw new BadRequestException(
-          `${key} não informado`,
-          ErrorCode.INVALID_PARAMS
-        );
+        throw new BadRequest(`${key} não informado`, ErrorCode.BAD_REQUEST);
       }
     }
 
     product = await this.productRepository.update(id, productData);
 
     if (!product) {
-      throw new NotFoundException(
-        "Produto não atualizado",
-        ErrorCode.NOT_FOUND
-      );
+      throw new NotFound("Produto não atualizado", ErrorCode.NOT_FOUND);
     }
 
     return product;
@@ -96,19 +72,13 @@ class ProductService {
 
   async delete(id: string): Promise<Product> {
     if (!id) {
-      throw new BadRequestException(
-        "Id não informado",
-        ErrorCode.INVALID_PARAMS
-      );
+      throw new BadRequest("Id não informado", ErrorCode.BAD_REQUEST);
     }
 
     const product = await this.productRepository.delete(id);
 
     if (!product) {
-      throw new NotFoundException(
-        "Produto não encontrado",
-        ErrorCode.NOT_FOUND
-      );
+      throw new NotFound("Produto não encontrado", ErrorCode.NOT_FOUND);
     }
 
     return product;

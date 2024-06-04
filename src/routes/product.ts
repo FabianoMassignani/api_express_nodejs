@@ -1,5 +1,5 @@
 import { Router } from "express";
-import handleAsyncMethod from "../middlewares/handleAsyncMethod";
+import asyncMethod from "../middlewares/handleAsyncMethod";
 import authenticate from "../middlewares/authenticateToken";
 
 import ProductController from "../controllers/productController";
@@ -12,11 +12,11 @@ const productController = new ProductController(productService);
 
 const router: Router = Router();
 
-router.use(authenticate);
-router.get("/", handleAsyncMethod(productController.getProducts));
-router.get("/getById/", handleAsyncMethod(productController.getProductById));
-router.post("/", handleAsyncMethod(productController.createProduct));
-router.put("/", handleAsyncMethod(productController.updateProduct));
-router.delete("/", handleAsyncMethod(productController.deleteProduct));
+router.use(asyncMethod(authenticate));
+router.get("/", asyncMethod(productController.getProducts));
+router.get("/getById/", asyncMethod(productController.getProductById));
+router.post("/", asyncMethod(productController.createProduct));
+router.put("/", asyncMethod(productController.updateProduct));
+router.delete("/", asyncMethod(productController.deleteProduct));
 
 export default router;

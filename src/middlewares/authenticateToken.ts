@@ -1,6 +1,6 @@
 import { Request, Response, NextFunction } from "express";
 import { verify } from "jsonwebtoken";
-import { BadRequestException } from "../exceptions";
+import { BadRequest, NotFound } from "../exceptions";
 import { ErrorCode } from "../exceptions/root";
 
 const authenticateToken = (
@@ -11,10 +11,7 @@ const authenticateToken = (
   const authHeader = request.headers.authorization;
 
   if (!authHeader) {
-    throw new BadRequestException(
-      "Token não informado",
-      ErrorCode.UNAUTHORIZED
-    );
+    throw new NotFound("Token não informado", ErrorCode.NOT_FOUND);
   }
 
   const [, token] = authHeader.split(" ");
@@ -23,7 +20,7 @@ const authenticateToken = (
 
   if (user) return next();
 
-  throw new BadRequestException("Token inválido", ErrorCode.UNAUTHORIZED);
+  throw new BadRequest("Token inválido", ErrorCode.BAD_REQUEST);
 };
 
 export default authenticateToken;

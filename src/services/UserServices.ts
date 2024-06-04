@@ -1,12 +1,12 @@
 import { hashPassword, comparePasswords, generateToken } from "../utils/";
-import { NotFoundException, BadRequestException } from "../exceptions";
+import { NotFound, BadRequest } from "../exceptions";
+import { IUserRepository } from "../repositorys/UserIRepository";
+import { ErrorCode } from "../exceptions/root";
 import {
   CreateUserDto,
   UserLogin,
   User,
 } from "../interfaces/user/user.interface";
-import { IUserRepository } from "../repositorys/UserIRepository";
-import { ErrorCode } from "../exceptions/root";
 
 class UserService {
   private userRepository: IUserRepository;
@@ -19,19 +19,16 @@ class UserService {
     const { email, password, name, active } = data;
 
     if (password.length < 6) {
-      throw new BadRequestException(
+      throw new BadRequest(
         "Senha deve conter no mínimo 6 caracteres",
-        ErrorCode.INVALID_PARAMS
+        ErrorCode.BAD_REQUEST
       );
     }
 
     const duplicateEmail = await this.userRepository.findByEmail(email);
 
     if (duplicateEmail) {
-      throw new BadRequestException(
-        "Email já cadastrado",
-        ErrorCode.DUPLICATE_ENTRY
-      );
+      throw new BadRequest("Email já cadastrado", ErrorCode.BAD_REQUEST);
     }
 
     data.password = hashPassword(password);
@@ -45,19 +42,13 @@ class UserService {
     const user = await this.userRepository.findByEmail(email);
 
     if (!user) {
-      throw new NotFoundException(
-        "Usuário não encontrado",
-        ErrorCode.NOT_FOUND
-      );
+      throw new NotFound("Usuário não encontrado", ErrorCode.NOT_FOUND);
     }
 
     const isValidPassword = comparePasswords(password, user.password);
 
     if (!isValidPassword) {
-      throw new BadRequestException(
-        "Senha inválida",
-        ErrorCode.INVALID_PASSWORD
-      );
+      throw new BadRequest("Senha inválida", ErrorCode.BAD_REQUEST);
     }
 
     const accessToken = generateToken({
