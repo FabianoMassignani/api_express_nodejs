@@ -5,7 +5,7 @@ import handleHttpException from "./middlewares/handleHttpException";
 import cors from "cors";
 import rateLimit from "express-rate-limit";
 import helmet from "helmet";
-import routes from "./routes";
+import routes from "./routes/root";
 
 const corsOptions = {
   origin: "http://localhost:5173",

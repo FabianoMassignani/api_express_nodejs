@@ -1,7 +1,7 @@
 import { Request, Response } from "express";
 import { BadRequestException } from "../exceptions/bad-request";
 import { ErrorCode } from "../exceptions/root";
-import { IProductRepository } from "../repositorys/IProductRepository";
+import { IProductRepository } from "../repositorys/ProductIRepository";
 import { NotFoundException } from "../exceptions/not-found";
 
 class ProductController {

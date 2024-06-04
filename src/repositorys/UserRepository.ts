@@ -1,5 +1,5 @@
 import { CreateUserDto } from "../interfaces/user/user.interface";
-import { IUserRepository } from "./IUserRepository";
+import { IUserRepository } from "./UserIRepository";
 import { User } from "../interfaces/user/user.interface";
 import { UserModel } from "../models";
 

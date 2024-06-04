@@ -3,7 +3,7 @@ import { sign } from "jsonwebtoken";
 import { BadRequestException } from "../exceptions/bad-request";
 import { NotFoundException } from "../exceptions/not-found";
 import { CreateUserDto, UserLogin } from "../interfaces/user/user.interface";
-import { IUserRepository } from "../repositorys/IUserRepository";
+import { IUserRepository } from "../repositorys/UserIRepository";
 import { ErrorCode } from "../exceptions/root";
 import { User } from "../interfaces/user/user.interface";
 

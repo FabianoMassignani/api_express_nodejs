@@ -1,4 +1,4 @@
-import { IProductRepository } from "./IProductRepository";
+import { IProductRepository } from "./ProductIRepository";
 import { Product } from "../interfaces/products/products.interface";
 import { ProductModel } from "../models";
 

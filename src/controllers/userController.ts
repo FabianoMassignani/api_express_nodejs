@@ -21,7 +21,7 @@ class UserController {
 
   postLogin = async (req: Request, res: Response): Promise<Response> => {
     const { email, password } = req.body;
-    
+
     const user = await this.userService.loginUser(email, password);
 
     return res.status(200).json(user);
