@@ -1,5 +1,5 @@
 import { Router } from "express";
-import { handleAsyncMethod } from "../middlewares/handleAsyncMethod";
+import handleAsyncMethod from "../middlewares/handleAsyncMethod";
 import authenticate from "../middlewares/authenticateToken";
 
 import ProductController from "../controllers/productController";

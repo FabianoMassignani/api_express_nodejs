@@ -1,5 +1,5 @@
 import { Router } from "express";
-import { handleAsyncMethod } from "../middlewares/handleAsyncMethod";
+import handleAsyncMethod from "../middlewares/handleAsyncMethod";
 
 import UserController from "../controllers//userController";
 import UserService from "../services/UserServices";
