@@ -4,12 +4,11 @@ export type User = {
   email: string;
   password: string;
   active: boolean;
-};
-
-export type UserLogin = User & {
   accessToken: string;
 };
 
-export type CreateUserDto = Omit<User, "id">;
+export type UserLogin = Omit<User, "id" | "password">;
+
+export type CreateUserDto = Omit<User, "id" | "accessToken">;
 
 export type UpdateUserDto = Partial<User>;

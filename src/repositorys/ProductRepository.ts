@@ -1,8 +1,7 @@
 import { IProductRepository } from "./IProductRepository";
-import { ProductModel } from "../models/product.model";
 import { Product } from "../interfaces/products/products.interface";
-import { NotFoundException } from "../exceptions/not-found";
-import { ErrorCode } from "../exceptions/root";
+import { ProductModel } from "../models";
+
 import {
   CreateProductsDto,
   UpdateProductDto,

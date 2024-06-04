@@ -72,7 +72,10 @@ class ProductController {
     let product = await this.productRepository.findById(id);
 
     if (!product) {
-      throw new NotFoundException("Product not found", ErrorCode.NOT_FOUND);
+      throw new NotFoundException(
+        "Produto não encontrado",
+        ErrorCode.NOT_FOUND
+      );
     }
 
     for (const key in req.body) {

@@ -1,7 +1,7 @@
-import { UserModel } from "../models/user.model";
 import { CreateUserDto } from "../interfaces/user/user.interface";
 import { IUserRepository } from "./IUserRepository";
 import { User } from "../interfaces/user/user.interface";
+import { UserModel } from "../models";
 
 class UserRepository implements IUserRepository {
   constructor() {}

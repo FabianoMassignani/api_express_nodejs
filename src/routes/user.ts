@@ -1,16 +1,17 @@
 import { Router } from "express";
-
-import UserController from "../controllers/userController";
-import UserRepository from "../repositorys/UserRepository";
-
 import { handleAsyncMethod } from "../middlewares/handleAsyncMethod";
 
+import UserController from "../controllers//userController";
+import UserService from "../services/UserServices";
+import UserRepository from "../repositorys/UserRepository";
+
 const userRepository = new UserRepository();
-const userController = new UserController(userRepository);
+const userService = new UserService(userRepository);
+const userController = new UserController(userService);
 
 const router: Router = Router();
 
-router.post("/register", handleAsyncMethod(userController.register));
-router.post("/login", handleAsyncMethod(userController.login));
+router.post("/register", handleAsyncMethod(userController.postUser));
+router.post("/login", handleAsyncMethod(userController.postLogin));
 
 export default router;

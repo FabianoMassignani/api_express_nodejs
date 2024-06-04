@@ -1,5 +1,4 @@
 import { Router } from "express";
-
 import ProductController from "../controllers/productController";
 import ProductRepository from "../repositorys/ProductRepository";
 import { handleAsyncMethod } from "../middlewares/handleAsyncMethod";
