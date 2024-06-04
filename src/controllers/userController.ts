@@ -14,7 +14,7 @@ class UserController {
 
     const data: CreateUserDto = { email, password, name, active };
 
-    const user = await this.userService.createUser(data);
+    const user = await this.userService.create(data);
 
     return res.status(201).json({ data: user, message: "Criado com sucesso" });
   };
@@ -22,7 +22,7 @@ class UserController {
   postLogin = async (req: Request, res: Response): Promise<Response> => {
     const { email, password } = req.body;
 
-    const user = await this.userService.loginUser(email, password);
+    const user = await this.userService.login(email, password);
 
     return res.status(200).json(user);
   };

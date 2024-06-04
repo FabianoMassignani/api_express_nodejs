@@ -14,8 +14,15 @@ class UserService {
     this.userRepository = userRepository;
   }
 
-  async createUser(data: CreateUserDto): Promise<User> {
+  async create(data: CreateUserDto): Promise<User> {
     const { email, password, name, active } = data;
+
+    if (password.length < 6) {
+      throw new BadRequestException(
+        "Senha deve conter no mínimo 6 caracteres",
+        ErrorCode.INVALID_PARAMS
+      );
+    }
 
     const duplicateEmail = await this.userRepository.findByEmail(email);
 
@@ -33,7 +40,7 @@ class UserService {
     return user;
   }
 
-  async loginUser(email: string, password: string): Promise<UserLogin> {
+  async login(email: string, password: string): Promise<UserLogin> {
     const user = await this.userRepository.findByEmail(email);
 
     if (!user) {
