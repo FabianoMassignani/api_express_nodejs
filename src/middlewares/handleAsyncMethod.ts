@@ -1,5 +1,5 @@
 import { Request, Response, NextFunction } from "express";
-import { InternalException } from "../exceptions/internal-exception";
+import { InternalException } from "../exceptions";
 import { ErrorCode, HttpException } from "../exceptions/root";
 
 const handleAsyncMethod = (method: Function) => {

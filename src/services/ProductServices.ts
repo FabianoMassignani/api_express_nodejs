@@ -1,5 +1,4 @@
-import { BadRequestException } from "../exceptions/bad-request";
-import { NotFoundException } from "../exceptions/not-found";
+import { NotFoundException, BadRequestException } from "../exceptions";
 import { ErrorCode } from "../exceptions/root";
 import { IProductRepository } from "../repositorys/ProductIRepository";
 import { Product } from "../interfaces/products/products.interface";

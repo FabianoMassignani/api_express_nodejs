@@ -1,6 +1,6 @@
 import { Request, Response, NextFunction } from "express";
 import { verify } from "jsonwebtoken";
-import { BadRequestException } from "../exceptions/bad-request";
+import { BadRequestException } from "../exceptions";
 import { ErrorCode } from "../exceptions/root";
 
 const authenticateToken = (

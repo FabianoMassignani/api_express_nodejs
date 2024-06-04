@@ -1,11 +1,12 @@
-import { generateToken } from "../utils/jwt.utils";
-import { hashPassword, comparePasswords } from "../utils/bcrypt.utils";
-import { BadRequestException } from "../exceptions/bad-request";
-import { NotFoundException } from "../exceptions/not-found";
-import { CreateUserDto, UserLogin } from "../interfaces/user/user.interface";
+import { hashPassword, comparePasswords, generateToken } from "../utils/";
+import { NotFoundException, BadRequestException } from "../exceptions";
+import {
+  CreateUserDto,
+  UserLogin,
+  User,
+} from "../interfaces/user/user.interface";
 import { IUserRepository } from "../repositorys/UserIRepository";
 import { ErrorCode } from "../exceptions/root";
-import { User } from "../interfaces/user/user.interface";
 
 class UserService {
   private userRepository: IUserRepository;
