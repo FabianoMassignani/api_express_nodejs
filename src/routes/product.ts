@@ -1,14 +1,18 @@
 import { Router } from "express";
-import ProductController from "../controllers/productController";
-import ProductRepository from "../repositorys/ProductRepository";
 import { handleAsyncMethod } from "../middlewares/handleAsyncMethod";
 import authenticate from "../middlewares/authenticateToken";
 
+import ProductController from "../controllers/productController";
+import ProductRepository from "../repositorys/ProductRepository";
+import ProductService from "../services/ProductServices";
+
 const productRepository = new ProductRepository();
-const productController = new ProductController(productRepository);
+const productService = new ProductService(productRepository);
+const productController = new ProductController(productService);
+
 const router: Router = Router();
 
-//router.use(authenticate);
+router.use(authenticate);
 router.get("/", handleAsyncMethod(productController.getProducts));
 router.get("/getById/", handleAsyncMethod(productController.getProductById));
 router.post("/", handleAsyncMethod(productController.createProduct));
