@@ -1,13 +1,12 @@
-import { IProductRepository } from "./ProductIRepository";
 import { Product } from "../interfaces/products/products.interface";
 import { ProductModel } from "../models";
-
 import {
   CreateProductsDto,
   UpdateProductDto,
 } from "../interfaces/products/products.interface";
+import { ProductIRepository } from "./productIRepository";
 
-class ProductRepository implements IProductRepository {
+class ProductRepository implements ProductIRepository {
   constructor() {}
 
   findAll(limit: number, skip: number): Promise<Product[]> {

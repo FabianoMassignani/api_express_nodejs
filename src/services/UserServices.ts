@@ -1,6 +1,6 @@
-import { hashPassword, comparePasswords, generateToken } from "../utils/";
+import { hashPassword, comparePasswords, generateToken } from "../utils";
 import { NotFound, BadRequest } from "../exceptions";
-import { IUserRepository } from "../repositorys/UserIRepository";
+import { UserIRepository } from "../repositorys/userIRepository";
 import { ErrorCode } from "../exceptions/root";
 import {
   CreateUserDto,
@@ -9,9 +9,9 @@ import {
 } from "../interfaces/user/user.interface";
 
 class UserService {
-  private userRepository: IUserRepository;
+  private userRepository: UserIRepository;
 
-  constructor(userRepository: IUserRepository) {
+  constructor(userRepository: UserIRepository) {
     this.userRepository = userRepository;
   }
 

@@ -1,9 +1,9 @@
 import { CreateUserDto } from "../interfaces/user/user.interface";
-import { IUserRepository } from "./UserIRepository";
+import { UserIRepository } from "./userIRepository";
 import { User } from "../interfaces/user/user.interface";
 import { UserModel } from "../models";
 
-class UserRepository implements IUserRepository {
+class UserRepository implements UserIRepository {
   constructor() {}
 
   async findByEmail(email: string): Promise<User | null> {

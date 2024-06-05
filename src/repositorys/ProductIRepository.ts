@@ -4,7 +4,7 @@ import {
 } from "../interfaces/products/products.interface";
 import { Product } from "../interfaces/products/products.interface";
 
-export interface IProductRepository {
+export interface ProductIRepository {
   findAll(limit: number, skip: number): Promise<Product[]>;
   findById(id: string): Promise<Product | null>;
   create(data: CreateProductsDto): Promise<Product>;

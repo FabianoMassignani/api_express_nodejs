@@ -1,12 +1,12 @@
 import { NotFound, BadRequest } from "../exceptions";
 import { ErrorCode } from "../exceptions/root";
-import { IProductRepository } from "../repositorys/ProductIRepository";
+import { ProductIRepository } from "../repositorys/productIRepository";
 import { Product } from "../interfaces/products/products.interface";
 
 class ProductService {
-  private productRepository: IProductRepository;
+  private productRepository: ProductIRepository;
 
-  constructor(productRepository: IProductRepository) {
+  constructor(productRepository: ProductIRepository) {
     this.productRepository = productRepository;
   }
 

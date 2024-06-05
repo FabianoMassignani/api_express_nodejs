@@ -3,7 +3,7 @@ import handleAsyncMethod from "../middlewares/handleAsyncMethod";
 
 import UserController from "../controllers//userController";
 import UserService from "../services/UserServices";
-import UserRepository from "../repositorys/UserRepository";
+import UserRepository from "../repositorys/userRepository";
 
 const userRepository = new UserRepository();
 const userService = new UserService(userRepository);

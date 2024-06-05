@@ -1,6 +1,6 @@
 import express, { Express } from "express";
 import connectDB from "./config/mongoDB";
-import { PORT } from "./secrets";
+import { PORT } from "./config/secrets";
 import handleHttpException from "./middlewares/handleHttpException";
 import cors from "cors";
 import rateLimit from "express-rate-limit";
