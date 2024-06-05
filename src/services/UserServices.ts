@@ -18,6 +18,10 @@ class UserService {
   async create(data: CreateUserDto): Promise<User> {
     const { email, password, name, active } = data;
 
+    if (!email || !password || !name || active === undefined) {
+      throw new BadRequest("Dados inválidos", ErrorCode.BAD_REQUEST);
+    }
+
     if (password.length < 6) {
       throw new BadRequest(
         "Senha deve conter no mínimo 6 caracteres",

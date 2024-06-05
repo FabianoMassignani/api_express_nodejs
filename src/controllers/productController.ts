@@ -8,8 +8,11 @@ class ProductController {
     this.productService = productService;
   }
 
-  getProducts = async (_req: Request, res: Response): Promise<Response> => {
-    const products = await this.productService.getAll();
+  getProducts = async (req: Request, res: Response): Promise<Response> => {
+    const limit = Number(req.query.limit);
+    const skip = Number(req.query.skip);
+
+    const products = await this.productService.getAll(limit, skip);
 
     return res.status(200).json({ data: products });
   };

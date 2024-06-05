@@ -10,8 +10,16 @@ class ProductService {
     this.productRepository = productRepository;
   }
 
-  async getAll(): Promise<Product[]> {
-    return await this.productRepository.findAll();
+  async getAll(limit: number, skip: number): Promise<Product[]> {
+    if (!limit) {
+      throw new BadRequest("Limit não informado", ErrorCode.BAD_REQUEST);
+    }
+
+    if (!skip) {
+      throw new BadRequest("Skip não informado", ErrorCode.BAD_REQUEST);
+    }
+
+    return await this.productRepository.findAll(limit, skip);
   }
 
   async getById(id: string): Promise<Product> {

@@ -1,12 +1,7 @@
 import { sign, SignOptions } from "jsonwebtoken";
-import { BadRequestException } from "../exceptions/bad-request";
+import { BadRequest } from "../exceptions/bad-request";
 import { ErrorCode } from "../exceptions/root";
-
-const JWT_SECRET = process.env.JWT_SECRET as string;
-
-if (!JWT_SECRET) {
-  throw new Error("JWT_SECRET não definido nas variáveis de ambiente");
-}
+import { JWT_SECRET } from "../secrets";
 
 export const generateToken = (
   payload: object,
@@ -20,9 +15,6 @@ export const generateToken = (
 
     return token;
   } catch (error) {
-    throw new BadRequestException(
-      "Erro ao gerar token",
-      ErrorCode.INTERNAL_SERVER
-    );
+    throw new BadRequest("Erro ao gerar token", ErrorCode.BAD_REQUEST);
   }
 };

@@ -10,8 +10,8 @@ import {
 class ProductRepository implements IProductRepository {
   constructor() {}
 
-  findAll(): Promise<Product[]> {
-    const products = ProductModel.find();
+  findAll(limit: number, skip: number): Promise<Product[]> {
+    const products = ProductModel.find().limit(limit).skip(skip);
 
     return products;
   }
