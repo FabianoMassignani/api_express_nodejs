@@ -3,7 +3,7 @@ import { ErrorCode } from "../exceptions/root";
 import { ProductIRepository } from "../repositorys/productIRepository";
 import {
   Product,
-  UpdateProductDto,
+  UpdateProduct,
 } from "../interfaces/products/products.interface";
 
 class ProductService {
@@ -65,7 +65,7 @@ class ProductService {
     return product;
   }
 
-  async update(id: string, data: UpdateProductDto): Promise<Product> {
+  async update(id: string, data: UpdateProduct): Promise<Product> {
     if (!id) {
       throw new BadRequest("Id não informado", ErrorCode.BAD_REQUEST);
     }

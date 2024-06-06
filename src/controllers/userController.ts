@@ -1,5 +1,4 @@
 import { Request, Response } from "express";
-import { CreateUserDto } from "../interfaces/user/user.interface";
 import UserService from "../services/UserServices";
 
 class UserController {
