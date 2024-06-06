@@ -1,7 +1,10 @@
 import { NotFound, BadRequest } from "../exceptions";
 import { ErrorCode } from "../exceptions/root";
 import { ProductIRepository } from "../repositorys/productIRepository";
-import { Product } from "../interfaces/products/products.interface";
+import {
+  Product,
+  UpdateProductDto,
+} from "../interfaces/products/products.interface";
 
 class ProductService {
   private productRepository: ProductIRepository;
@@ -41,10 +44,8 @@ class ProductService {
   }
 
   async create(data: Partial<Product>): Promise<Product> {
-    for (const key in data) {
-      if (!data[key as keyof Product]) {
-        throw new BadRequest(`${key} não informado`, ErrorCode.BAD_REQUEST);
-      }
+    if (!data) {
+      throw new BadRequest("Dados não informados", ErrorCode.BAD_REQUEST);
     }
 
     const product = await this.productRepository.create(data as Product);
@@ -56,7 +57,7 @@ class ProductService {
     return product;
   }
 
-  async update(id: string, data: Partial<Product>): Promise<Product> {
+  async update(id: string, data: UpdateProductDto): Promise<Product> {
     if (!id) {
       throw new BadRequest("Id não informado", ErrorCode.BAD_REQUEST);
     }
@@ -67,10 +68,8 @@ class ProductService {
       throw new NotFound("Produto não encontrado", ErrorCode.NOT_FOUND);
     }
 
-    for (const key in data) {
-      if (!data[key as keyof Product]) {
-        throw new BadRequest(`${key} não informado`, ErrorCode.BAD_REQUEST);
-      }
+    if (!data) {
+      throw new BadRequest("Dados não informados", ErrorCode.BAD_REQUEST);
     }
 
     product = await this.productRepository.update(id, data);

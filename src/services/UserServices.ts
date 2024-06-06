@@ -15,11 +15,15 @@ class UserService {
     this.userRepository = userRepository;
   }
 
-  async signUp(data: CreateUserDto): Promise<User> {
+  async create(data: CreateUserDto): Promise<User> {
     const { email, password, name, active } = data;
 
-    if (!email || !password || !name || active === undefined) {
-      throw new BadRequest("Dados inválidos", ErrorCode.BAD_REQUEST);
+    if (!email) {
+      throw new BadRequest("Email não informado", ErrorCode.BAD_REQUEST);
+    }
+
+    if (!password) {
+      throw new BadRequest("Senha não informada", ErrorCode.BAD_REQUEST);
     }
 
     if (password.length < 6) {
@@ -27,6 +31,14 @@ class UserService {
         "Senha deve conter no mínimo 6 caracteres",
         ErrorCode.BAD_REQUEST
       );
+    }
+
+    if (!name) {
+      throw new BadRequest("Nome não informado", ErrorCode.BAD_REQUEST);
+    }
+
+    if (typeof active !== "boolean") {
+      throw new BadRequest("Ativo não informado", ErrorCode.BAD_REQUEST);
     }
 
     const duplicateEmail = await this.userRepository.findByEmail(email);
@@ -42,7 +54,7 @@ class UserService {
     return user;
   }
 
-  async signIn(email: string, password: string): Promise<UserLogin> {
+  async login(email: string, password: string): Promise<UserLogin> {
     const user = await this.userRepository.findByEmail(email);
 
     if (!user) {

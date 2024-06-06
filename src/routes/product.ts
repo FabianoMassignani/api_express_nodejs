@@ -12,7 +12,7 @@ const productController = new ProductController(productService);
 
 const router: Router = Router();
 
-router.use(asyncMethod(authenticate));
+// router.use(asyncMethod(authenticate));
 router.get("/", asyncMethod(productController.getProducts));
 router.get("/getById/", asyncMethod(productController.getProductById));
 router.post("/", asyncMethod(productController.createProduct));

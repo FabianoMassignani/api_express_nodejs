@@ -9,7 +9,7 @@ class ProductController {
   }
 
   getProducts = async (req: Request, res: Response): Promise<Response> => {
-    const { limit = "20", skip = "10" } = req.params;
+    const { limit = "20", skip = "0" } = req.params;
 
     const products = await this.productService.getAll(limit, skip);
 

@@ -11,7 +11,7 @@ const userController = new UserController(userService);
 
 const router: Router = Router();
 
-router.post("/register", handleAsyncMethod(userController.postUser));
-router.post("/login", handleAsyncMethod(userController.postLogin));
+router.post("/signUp", handleAsyncMethod(userController.signUp));
+router.post("/signIn", handleAsyncMethod(userController.signIn));
 
 export default router;
