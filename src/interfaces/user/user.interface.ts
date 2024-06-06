@@ -9,6 +9,6 @@ export type User = {
 
 export type UserLogin = Omit<User, "id" | "password">;
 
-export type CreateUser = Omit<User, "id" | "accessToken">;
+export type CreateUserDto = Omit<User, "id" | "accessToken">;
 
-export type UpdateUser = Partial<User>;
+export type UpdateUserDto = Partial<User>;

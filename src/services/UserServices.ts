@@ -2,7 +2,7 @@ import { hashPassword, comparePasswords, generateToken } from "../utils";
 import { NotFound, BadRequest } from "../exceptions";
 import { UserIRepository } from "../repositorys/userIRepository";
 import { ErrorCode } from "../exceptions/root";
-import { CreateUser, UserLogin, User } from "../interfaces/user/user.interface";
+import { CreateUserDto, UserLogin, User } from "../interfaces/user/user.interface";
 
 class UserService {
   private userRepository: UserIRepository;
@@ -11,7 +11,7 @@ class UserService {
     this.userRepository = userRepository;
   }
 
-  async create(data: CreateUser): Promise<User> {
+  async create(data: CreateUserDto): Promise<User> {
     const { email, password, name, active } = data;
 
     if (!email) {

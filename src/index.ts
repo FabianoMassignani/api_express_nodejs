@@ -12,7 +12,7 @@ const corsOptions = {
 };
 
 const limiter = rateLimit({
-  windowMs: 15 * 60 * 1000, // 15 minutos
+  windowMs: 15 * 60 * 1000,
   limit: 100,
   message: "Muitas requisições, tente novamente mais tarde",
 });

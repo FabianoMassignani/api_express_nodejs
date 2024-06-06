@@ -6,6 +6,6 @@ export type Product = {
   quantidade: number;
 };
 
-export type CreateProduct = Omit<Product, "_id">;
+export type CreateProductDto = Omit<Product, "_id">;
 
-export type UpdateProduct = Partial<Product>;
+export type UpdateProductDto = Partial<Product>;

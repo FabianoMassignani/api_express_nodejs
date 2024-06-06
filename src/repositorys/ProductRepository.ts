@@ -1,7 +1,7 @@
 import { Product } from "../interfaces/products/products.interface";
 import { ProductModel } from "../models";
 import {
-  CreateProductsDto,
+  CreateProductDto,
   UpdateProductDto,
 } from "../interfaces/products/products.interface";
 import { ProductIRepository } from "./productIRepository";
@@ -21,7 +21,7 @@ class ProductRepository implements ProductIRepository {
     return foundProduct;
   }
 
-  create(data: CreateProductsDto): Promise<Product> {
+  create(data: CreateProductDto): Promise<Product> {
     const newProduct = ProductModel.create(data);
 
     return newProduct;
