@@ -15,7 +15,7 @@ class UserService {
     this.userRepository = userRepository;
   }
 
-  async create(data: CreateUserDto): Promise<User> {
+  async signUp(data: CreateUserDto): Promise<User> {
     const { email, password, name, active } = data;
 
     if (!email || !password || !name || active === undefined) {
@@ -42,7 +42,7 @@ class UserService {
     return user;
   }
 
-  async login(email: string, password: string): Promise<UserLogin> {
+  async signIn(email: string, password: string): Promise<UserLogin> {
     const user = await this.userRepository.findByEmail(email);
 
     if (!user) {
