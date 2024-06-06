@@ -10,11 +10,9 @@ class UserController {
   }
 
   signUp = async (req: Request, res: Response): Promise<Response> => {
-    const { email, password, name, active } = req.body;
+    const { body } = req;
 
-    const data: CreateUserDto = { email, password, name, active };
-
-    const user = await this.userService.create(data);
+    const user = await this.userService.create(body);
 
     return res.status(201).json({ data: user, message: "Criado com sucesso" });
   };

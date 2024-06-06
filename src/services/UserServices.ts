@@ -26,13 +26,6 @@ class UserService {
       throw new BadRequest("Senha não informada", ErrorCode.BAD_REQUEST);
     }
 
-    if (password.length < 6) {
-      throw new BadRequest(
-        "Senha deve conter no mínimo 6 caracteres",
-        ErrorCode.BAD_REQUEST
-      );
-    }
-
     if (!name) {
       throw new BadRequest("Nome não informado", ErrorCode.BAD_REQUEST);
     }
@@ -55,6 +48,14 @@ class UserService {
   }
 
   async login(email: string, password: string): Promise<UserLogin> {
+    if (!email) {
+      throw new BadRequest("Email não informado", ErrorCode.BAD_REQUEST);
+    }
+
+    if (!password) {
+      throw new BadRequest("Senha não informada", ErrorCode.BAD_REQUEST);
+    }
+
     const user = await this.userRepository.findByEmail(email);
 
     if (!user) {

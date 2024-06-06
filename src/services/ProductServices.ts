@@ -13,13 +13,21 @@ class ProductService {
     this.productRepository = productRepository;
   }
 
-  async getAll(limit: string, skip: string): Promise<Product[]> {
+  async getAll(query: { limit?: string; skip?: string }): Promise<Product[]> {
+    const { limit = "10", skip = "0" } = query;
+
     if (isNaN(Number(limit))) {
-      throw new BadRequest("Limit não informado", ErrorCode.BAD_REQUEST);
+      throw new BadRequest(
+        "Limit não informado ou inválido",
+        ErrorCode.BAD_REQUEST
+      );
     }
 
     if (isNaN(Number(skip))) {
-      throw new BadRequest("Skip não informado", ErrorCode.BAD_REQUEST);
+      throw new BadRequest(
+        "Skip não informado ou inválido",
+        ErrorCode.BAD_REQUEST
+      );
     }
 
     return await this.productRepository.findAll(Number(limit), Number(skip));
