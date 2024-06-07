@@ -1,7 +1,7 @@
 import { sign, SignOptions } from "jsonwebtoken";
-import { BadRequest } from "../exceptions/bad-request";
-import { ErrorCode } from "../exceptions/root";
-import { JWT_SECRET } from "../config/secrets";
+import { BadRequest } from "../../exceptions/bad-request";
+import { ErrorCode } from "../../exceptions/root";
+import { JWT_SECRET } from "../../config/secrets";
 
 export const generateToken = (
   payload: object,

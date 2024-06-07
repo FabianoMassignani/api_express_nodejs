@@ -1,8 +1,17 @@
-import { hashPassword, comparePasswords, generateToken } from "../utils";
+import {
+  hashPassword,
+  comparePasswords,
+  generateToken,
+  verifyRole,
+} from "../utils";
 import { NotFound, BadRequest } from "../exceptions";
 import { UserIRepository } from "../repositorys/userIRepository";
 import { ErrorCode } from "../exceptions/root";
-import { CreateUserDto, UserLogin, User } from "../interfaces/user/user.interface";
+import {
+  CreateUserDto,
+  UserLogin,
+  User,
+} from "../interfaces/user/user.interface";
 
 class UserService {
   private userRepository: UserIRepository;
@@ -12,7 +21,7 @@ class UserService {
   }
 
   async create(data: CreateUserDto): Promise<User> {
-    const { email, password, name, active } = data;
+    const { email, password, name, active, role } = data;
 
     if (!email) {
       throw new BadRequest("Email não informado", ErrorCode.BAD_REQUEST);
@@ -24,6 +33,10 @@ class UserService {
 
     if (!name) {
       throw new BadRequest("Nome não informado", ErrorCode.BAD_REQUEST);
+    }
+
+    if (!verifyRole(role)) {
+      throw new BadRequest("Role inválida", ErrorCode.BAD_REQUEST);
     }
 
     if (typeof active !== "boolean") {
@@ -72,6 +85,7 @@ class UserService {
     const data: UserLogin = {
       name: user.name,
       email: user.email,
+      role: user.role,
       active: user.active,
       accessToken: accessToken,
     };
