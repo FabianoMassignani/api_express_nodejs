@@ -4,6 +4,7 @@ import { ProductIRepository } from "../repositorys/productIRepository";
 import {
   Product,
   UpdateProductDto,
+  CreateProductDto,
 } from "../interfaces/products/products.interface";
 
 class ProductService {
@@ -16,18 +17,20 @@ class ProductService {
   async getAll(query: { limit?: string; skip?: string }): Promise<Product[]> {
     const { limit = "10", skip = "0" } = query;
 
-    if (isNaN(Number(limit))) {
-      throw new BadRequest(
-        "Limit não informado ou inválido",
-        ErrorCode.BAD_REQUEST
-      );
+    if (limit) {
+      throw new BadRequest("Limit não informado", ErrorCode.BAD_REQUEST);
     }
 
-    if (isNaN(Number(skip))) {
-      throw new BadRequest(
-        "Skip não informado ou inválido",
-        ErrorCode.BAD_REQUEST
-      );
+    if (skip) {
+      throw new BadRequest("Skip não informado", ErrorCode.BAD_REQUEST);
+    }
+
+    if (typeof Number(limit) !== "number") {
+      throw new BadRequest("Limit inválido", ErrorCode.BAD_REQUEST);
+    }
+
+    if (typeof Number(skip) !== "number") {
+      throw new BadRequest("Skip inválido", ErrorCode.BAD_REQUEST);
     }
 
     return await this.productRepository.findAll(Number(limit), Number(skip));
@@ -51,12 +54,34 @@ class ProductService {
     return product;
   }
 
-  async create(data: Partial<Product>): Promise<Product> {
-    if (!data) {
-      throw new BadRequest("Dados não informados", ErrorCode.BAD_REQUEST);
+  async create(data: CreateProductDto): Promise<Product> {
+    const { nome, preco, quantidade } = data;
+
+    if (!nome) {
+      throw new BadRequest("Nome não informado", ErrorCode.BAD_REQUEST);
     }
 
-    const product = await this.productRepository.create(data as Product);
+    if (typeof nome !== "string") {
+      throw new BadRequest("Nome inválido", ErrorCode.BAD_REQUEST);
+    }
+
+    if (!preco) {
+      throw new BadRequest("Preço não informado", ErrorCode.BAD_REQUEST);
+    }
+
+    if (typeof preco !== "number") {
+      throw new BadRequest("Preço inválido", ErrorCode.BAD_REQUEST);
+    }
+
+    if (!quantidade) {
+      throw new BadRequest("Quantidade não informada", ErrorCode.BAD_REQUEST);
+    }
+
+    if (typeof quantidade !== "number") {
+      throw new BadRequest("Quantidade inválida", ErrorCode.BAD_REQUEST);
+    }
+
+    const product = await this.productRepository.create(data);
 
     if (!product) {
       throw new BadRequest("Produto não criado", ErrorCode.BAD_REQUEST);
@@ -74,10 +99,6 @@ class ProductService {
 
     if (!product) {
       throw new NotFound("Produto não encontrado", ErrorCode.NOT_FOUND);
-    }
-
-    if (!data) {
-      throw new BadRequest("Dados não informados", ErrorCode.BAD_REQUEST);
     }
 
     product = await this.productRepository.update(id, data);

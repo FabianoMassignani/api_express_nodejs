@@ -16,7 +16,7 @@ const authenticateToken = (
 
   const [, token] = authHeader.split(" ");
 
-  const user = verify(token, String(process.env.APP_SECRET));
+  const user = verify(token, String(process.env.JWT_SECRET));
 
   if (user) return next();
 

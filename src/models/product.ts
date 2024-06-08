@@ -10,7 +10,7 @@ const productSchema: Schema = new Schema(
     },
     descricao: {
       type: String,
-      required: true,
+      required: false,
       trim: true,
     },
     preco: {

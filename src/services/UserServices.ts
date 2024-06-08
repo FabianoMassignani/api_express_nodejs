@@ -80,6 +80,7 @@ class UserService {
     const accessToken = generateToken({
       id: user.id,
       email: user.email,
+      role: user.role,
     });
 
     const data: UserLogin = {
