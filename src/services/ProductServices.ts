@@ -14,35 +14,25 @@ class ProductService {
     this.productRepository = productRepository;
   }
 
-  async getAll(query: { limit?: string; skip?: string }): Promise<Product[]> {
-    const { limit = "10", skip = "0" } = query;
-
-    if (limit) {
+  async getAll(limit: string, skip: string): Promise<Product[]> {
+    if (!limit) {
       throw new BadRequest("Limit não informado", ErrorCode.BAD_REQUEST);
     }
 
-    if (skip) {
+    if (!skip) {
       throw new BadRequest("Skip não informado", ErrorCode.BAD_REQUEST);
-    }
-
-    if (typeof Number(limit) !== "number") {
-      throw new BadRequest("Limit inválido", ErrorCode.BAD_REQUEST);
-    }
-
-    if (typeof Number(skip) !== "number") {
-      throw new BadRequest("Skip inválido", ErrorCode.BAD_REQUEST);
     }
 
     return await this.productRepository.findAll(Number(limit), Number(skip));
   }
 
   async getById(id: string): Promise<Product> {
-    if (typeof id !== "string") {
+    if (!id) {
       throw new BadRequest("Id não informado", ErrorCode.BAD_REQUEST);
     }
 
-    if (!id) {
-      throw new BadRequest("Id não informado", ErrorCode.BAD_REQUEST);
+    if (!id.match(/^[0-9a-fA-F]{24}$/)) {
+      throw new BadRequest("Id inválido", ErrorCode.BAD_REQUEST);
     }
 
     const product = await this.productRepository.findById(id);
@@ -61,24 +51,12 @@ class ProductService {
       throw new BadRequest("Nome não informado", ErrorCode.BAD_REQUEST);
     }
 
-    if (typeof nome !== "string") {
-      throw new BadRequest("Nome inválido", ErrorCode.BAD_REQUEST);
-    }
-
     if (!preco) {
       throw new BadRequest("Preço não informado", ErrorCode.BAD_REQUEST);
     }
 
-    if (typeof preco !== "number") {
-      throw new BadRequest("Preço inválido", ErrorCode.BAD_REQUEST);
-    }
-
     if (!quantidade) {
       throw new BadRequest("Quantidade não informada", ErrorCode.BAD_REQUEST);
-    }
-
-    if (typeof quantidade !== "number") {
-      throw new BadRequest("Quantidade inválida", ErrorCode.BAD_REQUEST);
     }
 
     const product = await this.productRepository.create(data);
@@ -101,7 +79,9 @@ class ProductService {
       throw new NotFound("Produto não encontrado", ErrorCode.NOT_FOUND);
     }
 
-    product = await this.productRepository.update(id, data);
+    const dataUpdate = { ...product, ...data };
+
+    product = await this.productRepository.update(id, dataUpdate);
 
     if (!product) {
       throw new NotFound("Produto não atualizado", ErrorCode.NOT_FOUND);
