@@ -4,8 +4,6 @@ import { User } from "../interfaces/user/user.interface";
 import { UserModel } from "../models";
 
 class UserRepository implements UserIRepository {
-  constructor() {}
-
   async findByEmail(email: string): Promise<User | null> {
     const user = await UserModel.findOne({ email });
 

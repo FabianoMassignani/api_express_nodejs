@@ -1,11 +1,11 @@
 import { Router } from "express";
-import productRouter from "./product";
-import userRouter from "./user";
+import UserContainer from "../container/userContainer";
+import ProductContainer from "../container/productContainer";
 
 const routes: Router = Router();
 const prefix = "/api";
 
-routes.use(`${prefix}/products`, productRouter);
-routes.use(`${prefix}/users`, userRouter);
+routes.use(`${prefix}/products`, ProductContainer.productRouter);
+routes.use(`${prefix}/users`, UserContainer.userRouter);
 
 export default routes;

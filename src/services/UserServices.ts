@@ -1,12 +1,12 @@
+import { NotFound, BadRequest } from "../exceptions";
+import { UserIRepository } from "../repositorys/userIRepository";
+import { ErrorCode } from "../exceptions/root";
 import {
   hashPassword,
   comparePasswords,
   generateToken,
   verifyRole,
 } from "../utils";
-import { NotFound, BadRequest } from "../exceptions";
-import { UserIRepository } from "../repositorys/userIRepository";
-import { ErrorCode } from "../exceptions/root";
 import {
   CreateUserDto,
   UserLogin,
