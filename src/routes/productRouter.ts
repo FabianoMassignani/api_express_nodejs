@@ -1,5 +1,5 @@
 import { Router } from "express";
-import handleAsyncMethod from "../middlewares/handleAsyncMethod";
+import asyncMethod from "../middlewares/asyncMethod";
 import ProductController from "../controllers/productController";
 
 export default class ProductRouter {
@@ -10,22 +10,11 @@ export default class ProductRouter {
     this._router = router;
     this._controller = controller;
 
-    this._router.get(
-      "/products",
-      handleAsyncMethod(this._controller.getProducts)
-    );
-    this._router.post(
-      "/products",
-      handleAsyncMethod(this._controller.createProduct)
-    );
-    this._router.put(
-      "/products/:id",
-      handleAsyncMethod(this._controller.updateProduct)
-    );
-    this._router.delete(
-      "/products/:id",
-      handleAsyncMethod(this._controller.deleteProduct)
-    );
+    this._router.get("/getAll", asyncMethod(this._controller.getProducts));
+    this._router.get("/", asyncMethod(this._controller.getProductById));
+    this._router.post("/", asyncMethod(this._controller.createProduct));
+    this._router.put("/:id", asyncMethod(this._controller.updateProduct));
+    this._router.delete("/:id", asyncMethod(this._controller.deleteProduct));
   }
 
   get router() {

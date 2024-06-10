@@ -1,5 +1,5 @@
 import { Router } from "express";
-import handleAsyncMethod from "../middlewares/handleAsyncMethod";
+import asyncMethod from "../middlewares/asyncMethod";
 import UserController from "../controllers/userController";
 
 export default class UserRouter {
@@ -10,8 +10,8 @@ export default class UserRouter {
     this._router = router;
     this._controller = controller;
 
-    this._router.get("/signIn", handleAsyncMethod(this._controller.signIn));
-    this._router.post("/signUp", handleAsyncMethod(this._controller.signUp));
+    this._router.get("/signIn", asyncMethod(this._controller.signIn));
+    this._router.post("/signUp", asyncMethod(this._controller.signUp));
   }
 
   get router() {
