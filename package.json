@@ -3,8 +3,26 @@
   "version": "1.0.0",
   "main": "index.js",
   "scripts": {
-    "start": "npx ts-node src/index.ts",
-    "test": "jest"
+    "start": "set NODE_ENV=dev && npx ts-node src/index.ts",
+    "test": "set NODE_ENV=test && jest"  
+  },
+  "jest": {
+    "testEnvironment": "node",
+    "roots": [
+      "<rootDir>/src"
+    ],
+    "transform": {
+      "^.+\\.tsx?$": "ts-jest"
+    },
+    "testRegex": "(/__tests__/.*|(\\.|/)(test|spec))\\.tsx?$",
+    "moduleFileExtensions": [
+      "ts",
+      "tsx",
+      "js",
+      "jsx",
+      "json",
+      "node"
+    ]
   },
   "keywords": [],
   "author": "fabiano",

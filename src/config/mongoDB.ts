@@ -1,13 +1,15 @@
 import { connect } from "mongoose";
-import { MONGO_URI } from "./secrets";
+import { MONGO_URI, MONGO_URI_TEST } from "./secrets";
 
 const connectDB = async () => {
   try {
-    const mongoURI: string = MONGO_URI;
+    await connect(MONGO_URI_TEST);
 
-    await connect(mongoURI);
+    if (process.env.NODE_ENV === "dev") {
+      await connect(MONGO_URI);
 
-    console.log("MongoDB conectado com sucesso!");
+      console.log("MongoDB conectado com sucesso!");
+    }
   } catch (err) {
     console.log(err);
     process.exit(1);
