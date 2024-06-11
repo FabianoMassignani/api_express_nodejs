@@ -10,7 +10,7 @@ export default class UserRouter {
     this._router = router;
     this._controller = controller;
 
-    this._router.get("/signIn", asyncMethod(this._controller.signIn));
+    this._router.post("/signIn", asyncMethod(this._controller.signIn));
     this._router.post("/signUp", asyncMethod(this._controller.signUp));
   }
 
