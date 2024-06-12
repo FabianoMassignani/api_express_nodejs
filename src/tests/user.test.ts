@@ -4,13 +4,14 @@ import mongoose from "mongoose";
 import { UserModel } from "../models/user";
 
 describe("UserController", () => {
-  const userData = {
+  let userData = {
     email: "test@example.com",
     password: "password123",
     name: "Test User",
     active: true,
     role: "client",
   };
+  let idUserCriado = "";
 
   beforeAll(async () => {
     await UserModel.deleteMany({});
@@ -57,6 +58,8 @@ describe("UserController", () => {
     expect(response.body.data).toHaveProperty("email", userData.email);
     expect(response.body.data).toHaveProperty("name", userData.name);
     expect(response.body.message).toBe("Criado com sucesso");
+
+    idUserCriado = response.body.data._id;
   });
 
   it("Não deve permitir o registro de um usuário com e-mail duplicado", async () => {
@@ -116,9 +119,33 @@ describe("UserController", () => {
       password: userData.password,
     });
 
-    expect(response.status).toBe(200);
+    expect(response.status).toBe(201);
     expect(response.body).toHaveProperty("email", userData.email);
     expect(response.body).toHaveProperty("name", userData.name);
     expect(response.body).toHaveProperty("accessToken");
+  });
+
+  it("Deletar usuário sem id", async () => {
+    const response = await request(app).delete("/api/users/deleteUser");
+
+    expect(response.status).toBe(400);
+    expect(response.body.message).toBe("Id não informado");
+  });
+
+  it("Deletar usuário não encontrado", async () => {
+    const response = await request(app).delete(
+      "/api/users/deleteUser/60f7b3b3b3b3b3b3b3b3b3b3"
+    );
+
+    expect(response.status).toBe(404);
+    expect(response.body.message).toBe("Usuário não encontrado");
+  });
+
+  it("Deletar usuário", async () => {
+    const response = await request(app).delete(
+      `/api/users/deleteUser/${idUserCriado}`
+    );
+
+    expect(response.status).toBe(201);
   });
 });

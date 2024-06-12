@@ -12,6 +12,10 @@ export default class UserRouter {
 
     this._router.post("/signIn", asyncMethod(this._controller.signIn));
     this._router.post("/signUp", asyncMethod(this._controller.signUp));
+    this._router.delete(
+      "/deleteUser/:id",
+      asyncMethod(this._controller.deleteUser)
+    );
   }
 
   get router() {

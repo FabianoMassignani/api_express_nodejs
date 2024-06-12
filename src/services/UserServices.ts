@@ -93,6 +93,20 @@ class UserService {
 
     return data;
   }
+
+  async delete(id: string): Promise<User> {
+    if (!id) {
+      throw new BadRequest("Id não informado", ErrorCode.BAD_REQUEST);
+    }
+
+    const user = await this.userRepository.delete(id);
+
+    if (!user) {
+      throw new NotFound("Usuário não encontrado", ErrorCode.NOT_FOUND);
+    }
+
+    return user;
+  }
 }
 
 export default UserService;

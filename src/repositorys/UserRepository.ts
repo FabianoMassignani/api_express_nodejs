@@ -15,6 +15,12 @@ class UserRepository implements UserIRepository {
 
     return user;
   }
+
+  async delete(id: string): Promise<User | null> {
+    const user = await UserModel.findByIdAndDelete(id);
+
+    return user;
+  }
 }
 
 export default UserRepository;
