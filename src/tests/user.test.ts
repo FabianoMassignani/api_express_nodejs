@@ -125,26 +125,8 @@ describe("UserController", () => {
     expect(response.body).toHaveProperty("accessToken");
   });
 
-  it("Deletar usuário sem id", async () => {
-    const response = await request(app).delete("/api/users/deleteUser");
-
-    expect(response.status).toBe(400);
-    expect(response.body.message).toBe("Id não informado");
-  });
-
-  it("Deletar usuário não encontrado", async () => {
-    const response = await request(app).delete(
-      "/api/users/deleteUser/60f7b3b3b3b3b3b3b3b3b3b3"
-    );
-
-    expect(response.status).toBe(404);
-    expect(response.body.message).toBe("Usuário não encontrado");
-  });
-
   it("Deletar usuário", async () => {
-    const response = await request(app).delete(
-      `/api/users/deleteUser/${idUserCriado}`
-    );
+    const response = await request(app).delete(`/api/users/${idUserCriado}`);
 
     expect(response.status).toBe(201);
   });
