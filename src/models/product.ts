@@ -17,9 +17,39 @@ const productSchema: Schema = new Schema(
       type: Number,
       required: true,
     },
-    quantidade: {
+    estoque: {
       type: Number,
       required: true,
+    },
+    // Imposto sobre Circulação de Mercadorias e Serviços
+    icms: {   
+      type: Number,
+      required: false,
+    },
+    fornecedor: {
+      type: String,
+      required: false,
+    },
+    marca: {
+      type: String,
+      required: false,
+    },
+    categoria: {
+      type: String,
+      required: false,
+    },
+    colecao: {
+      type: String,
+      required: false,
+    },
+    // Nomenclatura Comum do Mercosul
+    ncm: {
+      type: String,
+      required: false,
+    },
+    barcode: {
+      type: String,
+      required: false,
     },
   },
   {

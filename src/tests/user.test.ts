@@ -13,14 +13,6 @@ describe("UserController", () => {
   };
   let idUserCriado = "";
 
-  beforeAll(async () => {
-    await UserModel.deleteMany({});
-  });
-
-  afterAll(async () => {
-    await mongoose.connection.close();
-  });
-
   it("Registrar novo usuário sem e-mail", async () => {
     const response = await request(app)
       .post("/api/users/signUp")

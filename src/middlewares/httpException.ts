@@ -16,7 +16,7 @@ const handleHttpException = (
     console.error(error);
 
     exception = new InternalException(
-      "Internal Server Error",
+      "Erro interno do servidor.",
       ErrorCode.INTERNAL_SERVER,
       error
     );

@@ -45,7 +45,7 @@ class ProductService {
   }
 
   async create(data: CreateProductDto): Promise<Product> {
-    const { nome, preco, quantidade } = data;
+    const { nome, preco, estoque } = data;
 
     if (!nome) {
       throw new BadRequest("Nome não informado", ErrorCode.BAD_REQUEST);
@@ -55,8 +55,8 @@ class ProductService {
       throw new BadRequest("Preço não informado", ErrorCode.BAD_REQUEST);
     }
 
-    if (!quantidade) {
-      throw new BadRequest("Quantidade não informada", ErrorCode.BAD_REQUEST);
+    if (!estoque) {
+      throw new BadRequest("Estoque não informada", ErrorCode.BAD_REQUEST);
     }
 
     const product = await this.productRepository.create(data);

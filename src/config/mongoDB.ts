@@ -3,12 +3,14 @@ import { MONGO_URI, MONGO_URI_TEST } from "./secrets";
 
 const connectDB = async () => {
   try {
-    await connect(MONGO_URI_TEST);
-
     if (process.env.NODE_ENV === "dev") {
       await connect(MONGO_URI);
 
       console.log("MongoDB conectado com sucesso!");
+    }
+
+    if (process.env.NODE_ENV === "test") {
+      await connect(MONGO_URI_TEST);
     }
   } catch (err) {
     console.log(err);
