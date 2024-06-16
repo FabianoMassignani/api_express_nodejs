@@ -4,12 +4,12 @@
     {
       "type": "node",
       "request": "launch",
-      "name": "Launch Dev",
+      "name": "Desenvolvimento",
       "skipFiles": ["<node_internals>/**"],
       "program": "${workspaceFolder}/dist/index.js",
       "outFiles": ["${workspaceFolder}/**/*.js"],
       "env": {
-        "NODE_ENV": "dev" // Define NODE_ENV como "dev"
+        "NODE_ENV": "dev"
       }
     }
   ]

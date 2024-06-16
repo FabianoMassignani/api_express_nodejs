@@ -1,13 +1,11 @@
 import request from "supertest";
 import app from "../server";
-import mongoose from "mongoose";
-import { UserModel } from "../models/user";
 
 describe("UserController", () => {
   let userData = {
     email: "test@example.com",
     password: "password123",
-    name: "Test User",
+    username: "Test User",
     active: true,
     role: "client",
   };
@@ -34,7 +32,7 @@ describe("UserController", () => {
   it("Registrar novo usuário sem nome", async () => {
     const response = await request(app)
       .post("/api/users/signUp")
-      .send({ ...userData, name: "" });
+      .send({ ...userData, username: "" });
 
     expect(response.status).toBe(400);
     expect(response.body.message).toBe("Nome não informado");
@@ -48,7 +46,7 @@ describe("UserController", () => {
     expect(response.status).toBe(201);
     expect(response.body).toHaveProperty("data");
     expect(response.body.data).toHaveProperty("email", userData.email);
-    expect(response.body.data).toHaveProperty("name", userData.name);
+    expect(response.body.data).toHaveProperty("username", userData.username);
     expect(response.body.message).toBe("Criado com sucesso");
 
     idUserCriado = response.body.data._id;
@@ -113,7 +111,7 @@ describe("UserController", () => {
 
     expect(response.status).toBe(201);
     expect(response.body).toHaveProperty("email", userData.email);
-    expect(response.body).toHaveProperty("name", userData.name);
+    expect(response.body).toHaveProperty("username", userData.username);
     expect(response.body).toHaveProperty("accessToken");
   });
 

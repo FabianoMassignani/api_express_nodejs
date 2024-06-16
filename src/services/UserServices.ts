@@ -21,7 +21,7 @@ class UserService {
   }
 
   async create(data: CreateUserDto): Promise<User> {
-    const { email, password, name, active, role } = data;
+    const { email, password, username, active, role } = data;
 
     if (!email) {
       throw new BadRequest("Email não informado", ErrorCode.BAD_REQUEST);
@@ -31,7 +31,7 @@ class UserService {
       throw new BadRequest("Senha não informada", ErrorCode.BAD_REQUEST);
     }
 
-    if (!name) {
+    if (!username) {
       throw new BadRequest("Nome não informado", ErrorCode.BAD_REQUEST);
     }
 
@@ -68,7 +68,7 @@ class UserService {
     const user = await this.userRepository.findByEmail(email);
 
     if (!user) {
-      throw new NotFound("Usuário não encontrado", ErrorCode.NOT_FOUND);
+      throw new NotFound("Usuário", ErrorCode.NOT_FOUND);
     }
 
     const isValidPassword = comparePasswords(password, user.password);
@@ -78,13 +78,12 @@ class UserService {
     }
 
     const accessToken = generateToken({
-      id: user.id,
-      email: user.email,
-      role: user.role,
+      sub: user.id,
+      username: user.username,
     });
 
     const data: UserLogin = {
-      name: user.name,
+      username: user.username,
       email: user.email,
       role: user.role,
       active: user.active,
@@ -102,7 +101,7 @@ class UserService {
     const user = await this.userRepository.delete(id);
 
     if (!user) {
-      throw new NotFound("Usuário não encontrado", ErrorCode.NOT_FOUND);
+      throw new NotFound("Usuário", ErrorCode.NOT_FOUND);
     }
 
     return user;

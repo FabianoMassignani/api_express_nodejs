@@ -38,7 +38,7 @@ class ProductService {
     const product = await this.productRepository.findById(id);
 
     if (!product) {
-      throw new NotFound("Produto não encontrado", ErrorCode.NOT_FOUND);
+      throw new NotFound("Produto", ErrorCode.NOT_FOUND);
     }
 
     return product;
@@ -76,7 +76,7 @@ class ProductService {
     let product = await this.productRepository.findById(id);
 
     if (!product) {
-      throw new NotFound("Produto não encontrado", ErrorCode.NOT_FOUND);
+      throw new NotFound("Produto", ErrorCode.NOT_FOUND);
     }
 
     const dataUpdate = { ...product, ...data };
@@ -84,7 +84,7 @@ class ProductService {
     product = await this.productRepository.update(id, dataUpdate);
 
     if (!product) {
-      throw new NotFound("Produto não atualizado", ErrorCode.NOT_FOUND);
+      throw new BadRequest("Produto não atualizado", ErrorCode.BAD_REQUEST);
     }
 
     return product;
@@ -98,7 +98,7 @@ class ProductService {
     const product = await this.productRepository.delete(id);
 
     if (!product) {
-      throw new NotFound("Produto não encontrado", ErrorCode.NOT_FOUND);
+      throw new NotFound("Produto", ErrorCode.NOT_FOUND);
     }
 
     return product;

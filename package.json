@@ -3,8 +3,8 @@
   "version": "1.0.0",
   "main": "index.js",
   "scripts": {
-    "start": "set NODE_ENV=dev && npx ts-node src/index.ts",
-    "test": "set NODE_ENV=test && jest"  
+    "start": "set NODE_ENV=dev && npx tsx &&node dist/index.js",
+    "test": "set NODE_ENV=test && jest"
   },
   "jest": {
     "testEnvironment": "node",
@@ -40,7 +40,8 @@
     "helmet": "^7.1.0",
     "ioredis": "^5.4.1",
     "jsonwebtoken": "^9.0.2",
-    "mongoose": "^8.3.5"
+    "mongoose": "^8.3.5",
+    "prom-client": "^15.1.2"
   },
   "devDependencies": {
     "@eslint/js": "^9.3.0",
