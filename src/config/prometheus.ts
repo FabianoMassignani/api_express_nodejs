@@ -7,14 +7,6 @@ register.setDefaultLabels({
   app: "api-node-class",
 });
 
-const http_request_counter = new Prometheus.Counter({
-  name: "http_request_count",
-  help: "Total number of HTTP requests",
-  labelNames: ["method", "route", "statusCode"],
-});
-
-register.registerMetric(http_request_counter);
-
 Prometheus.collectDefaultMetrics({ register });
 
 const getMetrics = async (_req: Request, res: Response) => {

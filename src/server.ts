@@ -15,7 +15,7 @@ app.use(cors(corsOptions));
 app.use(helmet());
 app.use(limiter);
 app.use(express.json());
-app.get("/metrics", getMetrics);
+//app.get("/metrics", getMetrics);
 app.use(routes);
 app.use(handleHttpException);
 
