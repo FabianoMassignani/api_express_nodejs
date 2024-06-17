@@ -9,6 +9,10 @@ const telemetry = (
   response: Response,
   next: NextFunction
 ): Promise<any> | void => {
+  if (process.env.NODE_ENV == "test") {
+    return next();
+  }
+
   const { method, url } = request;
   const start = Date.now();
 
@@ -27,7 +31,7 @@ const telemetry = (
     TelemetryContainer.logRequest(telemetry);
   });
 
-  next();
+  return next();
 };
 
 export default telemetry;
