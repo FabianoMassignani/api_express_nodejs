@@ -12,6 +12,6 @@ export default class UserContainer {
 
     const userRouter = new UserRouter(Router(), userController);
 
-    return userRouter.router;
+    return userRouter.getRouter;
   }
 }

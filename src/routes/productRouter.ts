@@ -3,21 +3,21 @@ import asyncMethod from "../middlewares/asyncMethod";
 import ProductController from "../controllers/productController";
 
 export default class ProductRouter {
-  private _router: Router;
-  private _controller: ProductController;
+  private router: Router;
+  private controller: ProductController;
 
   constructor(router: Router, controller: ProductController) {
-    this._router = router;
-    this._controller = controller;
+    this.router = router;
+    this.controller = controller;
 
-    this._router.get("/getAll", asyncMethod(this._controller.getProducts));
-    this._router.get("/", asyncMethod(this._controller.getProductById));
-    this._router.post("/", asyncMethod(this._controller.createProduct));
-    this._router.put("/:id", asyncMethod(this._controller.updateProduct));
-    this._router.delete("/:id", asyncMethod(this._controller.deleteProduct));
+    this.router.get("/getAll", asyncMethod(this.controller.getProducts));
+    this.router.get("/", asyncMethod(this.controller.getProductById));
+    this.router.post("/", asyncMethod(this.controller.createProduct));
+    this.router.put("/:id", asyncMethod(this.controller.updateProduct));
+    this.router.delete("/:id", asyncMethod(this.controller.deleteProduct));
   }
 
-  get router() {
-    return this._router;
+  get getRouter() {
+    return this.router;
   }
 }

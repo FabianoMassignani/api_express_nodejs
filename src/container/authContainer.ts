@@ -12,6 +12,6 @@ export default class AuthContainer {
 
     const authRouter = new AuthRouter(Router(), authController);
 
-    return authRouter.router;
+    return authRouter.getRouter;
   }
 }

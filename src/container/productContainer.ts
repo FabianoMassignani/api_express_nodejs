@@ -12,6 +12,6 @@ export default class ProductContainer {
 
     const productRouter = new ProductRouter(Router(), productController);
 
-    return productRouter.router;
+    return productRouter.getRouter;
   }
 }

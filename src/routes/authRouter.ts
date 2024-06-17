@@ -3,17 +3,17 @@ import asyncMethod from "../middlewares/asyncMethod";
 import AuthController from "../controllers/authController";
 
 export default class AuthRouter {
-  private _router: Router;
-  private _controller: AuthController;
+  private router: Router;
+  private controller: AuthController;
 
   constructor(router: Router, controller: AuthController) {
-    this._router = router;
-    this._controller = controller;
+    this.router = router;
+    this.controller = controller;
 
-    this._router.post("/signIn", asyncMethod(this._controller.signIn));
+    this.router.post("/signIn", asyncMethod(this.controller.signIn));
   }
 
-  get router() {
-    return this._router;
+  get getRouter() {
+    return this.router;
   }
 }
