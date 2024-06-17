@@ -64,7 +64,7 @@ describe("UserController", () => {
   });
 
   it("Fazer login do usuário sem e-mail", async () => {
-    const response = await request(app).post("/api/users/signIn").send({
+    const response = await request(app).post("/api/auth/signIn").send({
       email: "",
       password: userData.password,
     });
@@ -74,7 +74,7 @@ describe("UserController", () => {
   });
 
   it("Fazer login do usuário sem senha", async () => {
-    const response = await request(app).post("/api/users/signIn").send({
+    const response = await request(app).post("/api/auth/signIn").send({
       email: userData.email,
       password: "",
     });
@@ -84,7 +84,7 @@ describe("UserController", () => {
   });
 
   it("Fazer login do usuário com usuário não encontrado", async () => {
-    const response = await request(app).post("/api/users/signIn").send({
+    const response = await request(app).post("/api/auth/signIn").send({
       email: "teste@hotmail.com",
       password: userData.password,
     });
@@ -94,7 +94,7 @@ describe("UserController", () => {
   });
 
   it("Fazer login do usuário com senha inválida", async () => {
-    const response = await request(app).post("/api/users/signIn").send({
+    const response = await request(app).post("/api/auth/signIn").send({
       email: userData.email,
       password: "senha123",
     });
@@ -104,7 +104,7 @@ describe("UserController", () => {
   });
 
   it("Fazer login do usuário", async () => {
-    const response = await request(app).post("/api/users/signIn").send({
+    const response = await request(app).post("/api/auth/signIn").send({
       email: userData.email,
       password: userData.password,
     });
