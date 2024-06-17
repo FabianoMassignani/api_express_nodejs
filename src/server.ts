@@ -4,9 +4,9 @@ import cors from "cors";
 import helmet from "helmet";
 import corsOptions from "./config/cors";
 import connectDB from "./config/mongoDB";
-import { getMetrics } from "./config/prometheus";
 import limiter from "./config/rateLimiter";
 import routes from "./routes/root";
+import telemetry from "./middlewares/telemetry";
 
 const app: Express = express();
 
@@ -15,7 +15,7 @@ app.use(cors(corsOptions));
 app.use(helmet());
 app.use(limiter);
 app.use(express.json());
-//app.get("/metrics", getMetrics);
+app.use(telemetry);
 app.use(routes);
 app.use(handleHttpException);
 

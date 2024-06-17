@@ -45,6 +45,8 @@ class AuthServices {
       accessToken: accessToken,
     };
 
+    throw new Error("Method not implemented.");
+
     return data;
   }
 }

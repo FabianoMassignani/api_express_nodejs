@@ -11,7 +11,7 @@ const authenticateToken = (
   const authHeader = request.headers.authorization;
 
   if (!authHeader) {
-    throw new NotFound("Token não informado", ErrorCode.NOT_FOUND);
+    throw new NotFound("Token", ErrorCode.NOT_FOUND);
   }
 
   const [, token] = authHeader.split(" ");
