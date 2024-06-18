@@ -3,7 +3,7 @@
   "version": "1.0.0",
   "main": "index.js",
   "scripts": {
-    "start": "set NODE_ENV=dev && npx tsx &&node dist/index.js",
+    "start": "set NODE_ENV=dev && node dist/index.js",
     "test": "set NODE_ENV=test && jest"
   },
   "jest": {

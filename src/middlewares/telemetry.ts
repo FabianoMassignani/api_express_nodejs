@@ -10,7 +10,7 @@ const telemetry = (
   next: NextFunction
 ): Promise<any> | void => {
   if (process.env.NODE_ENV == "test") {
-    return next();
+    console.log("Test environment, telemetry disabled");
   }
 
   const { method, url } = request;

@@ -20,6 +20,12 @@ class UserService {
     this.userRepository = userRepository;
   }
 
+  async getAll(): Promise<User[]> {
+    const users = await this.userRepository.getAll();
+
+    return users;
+  }
+
   async create(data: CreateUserDto): Promise<User> {
     const { email, password, username, active, role } = data;
 
@@ -91,6 +97,20 @@ class UserService {
     };
 
     return data;
+  }
+
+  async update(id: string, data: CreateUserDto): Promise<User> {
+    if (!id) {
+      throw new BadRequest("Id não informado", ErrorCode.BAD_REQUEST);
+    }
+
+    const user = await this.userRepository.update(id, data);
+
+    if (!user) {
+      throw new NotFound("Usuário", ErrorCode.NOT_FOUND);
+    }
+
+    return user;
   }
 
   async delete(id: string): Promise<User> {

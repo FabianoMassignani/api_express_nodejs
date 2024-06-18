@@ -9,11 +9,12 @@ describe("UserController", () => {
     active: true,
     role: "client",
   };
+
   let idUserCriado = "";
 
   it("Registrar novo usuário sem e-mail", async () => {
     const response = await request(app)
-      .post("/api/users/signUp")
+      .post("/api/users/register")
       .send({ ...userData, email: "" });
 
     expect(response.status).toBe(400);
@@ -22,7 +23,7 @@ describe("UserController", () => {
 
   it("Registrar novo usuário sem senha", async () => {
     const response = await request(app)
-      .post("/api/users/signUp")
+      .post("/api/users/register")
       .send({ ...userData, password: "" });
 
     expect(response.status).toBe(400);
@@ -31,7 +32,7 @@ describe("UserController", () => {
 
   it("Registrar novo usuário sem nome", async () => {
     const response = await request(app)
-      .post("/api/users/signUp")
+      .post("/api/users/register")
       .send({ ...userData, username: "" });
 
     expect(response.status).toBe(400);
@@ -40,7 +41,7 @@ describe("UserController", () => {
 
   it("Registrar novo usuário", async () => {
     const response = await request(app)
-      .post("/api/users/signUp")
+      .post("/api/users/register")
       .send(userData);
 
     expect(response.status).toBe(201);
@@ -53,10 +54,10 @@ describe("UserController", () => {
   });
 
   it("Não deve permitir o registro de um usuário com e-mail duplicado", async () => {
-    await request(app).post("/api/users/signUp").send(userData);
+    await request(app).post("/api/users/register").send(userData);
 
     const response = await request(app)
-      .post("/api/users/signUp")
+      .post("/api/users/register")
       .send(userData);
 
     expect(response.status).toBe(400);
@@ -90,7 +91,7 @@ describe("UserController", () => {
     });
 
     expect(response.status).toBe(404);
-    expect(response.body.message).toBe("Usuário não encontrado");
+    expect(response.body.message).toBe("Usuário não encontrado!");
   });
 
   it("Fazer login do usuário com senha inválida", async () => {

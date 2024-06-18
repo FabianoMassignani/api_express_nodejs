@@ -11,12 +11,12 @@ export default class ProductRouter {
     this.router = router;
     this.controller = controller;
 
-    //this.router.use(authenticateToken);
-    this.router.get("/getAll",authenticateToken, asyncMethod(this.controller.getProducts));
-    this.router.get("/", asyncMethod(this.controller.getProductById));
-    this.router.post("/", asyncMethod(this.controller.createProduct));
-    this.router.put("/:id", asyncMethod(this.controller.updateProduct));
-    this.router.delete("/:id", asyncMethod(this.controller.deleteProduct));
+    this.router.use(authenticateToken);
+    this.router.get("/getAll", asyncMethod(this.controller.getAll));
+    this.router.get("/", asyncMethod(this.controller.getById));
+    this.router.post("/", asyncMethod(this.controller.create));
+    this.router.put("/:id", asyncMethod(this.controller.update));
+    this.router.delete("/:id", asyncMethod(this.controller.delete));
   }
 
   get getRouter() {

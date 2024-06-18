@@ -10,8 +10,10 @@ export default class UserRouter {
     this.router = router;
     this.controller = controller;
 
-    this.router.post("/signUp", asyncMethod(this.controller.signUp));
-    this.router.delete("/", asyncMethod(this.controller.deleteUser));
+    this.router.post("/register", asyncMethod(this.controller.register));
+    this.router.get("/", asyncMethod(this.controller.getAll));
+    this.router.put("/", asyncMethod(this.controller.update));
+    this.router.delete("/:id", asyncMethod(this.controller.delete));
   }
 
   get getRouter() {

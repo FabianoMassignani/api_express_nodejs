@@ -8,7 +8,7 @@ class ProductController {
     this.productService = productService;
   }
 
-  getProducts = async (req: Request, res: Response): Promise<Response> => {
+  getAll = async (req: Request, res: Response): Promise<Response> => {
     const { limit, skip } = req.query as { limit: string; skip: string };
 
     const products = await this.productService.getAll(limit, skip);
@@ -16,7 +16,7 @@ class ProductController {
     return res.status(200).json({ data: products });
   };
 
-  getProductById = async (req: Request, res: Response): Promise<Response> => {
+  getById = async (req: Request, res: Response): Promise<Response> => {
     const { id } = req.query as { id: string };
 
     const product = await this.productService.getById(id);
@@ -24,7 +24,7 @@ class ProductController {
     return res.status(200).json({ data: product });
   };
 
-  createProduct = async (req: Request, res: Response): Promise<Response> => {
+  create = async (req: Request, res: Response): Promise<Response> => {
     const productData = req.body;
 
     const productCreate = await this.productService.create(productData);
@@ -34,7 +34,7 @@ class ProductController {
       .json({ data: productCreate, message: "Criado com sucesso" });
   };
 
-  updateProduct = async (req: Request, res: Response): Promise<Response> => {
+  update = async (req: Request, res: Response): Promise<Response> => {
     const id: string = req.params.id;
     const productData = req.body;
 
@@ -45,7 +45,7 @@ class ProductController {
       .json({ data: productUpdate, message: "Atualizado com sucesso" });
   };
 
-  deleteProduct = async (req: Request, res: Response): Promise<Response> => {
+  delete = async (req: Request, res: Response): Promise<Response> => {
     const id: string = req.params.id;
 
     const product = await this.productService.delete(id);
