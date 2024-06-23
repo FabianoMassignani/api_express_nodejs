@@ -15,11 +15,11 @@ npm install
 cp .env
 ```
 
-Adicione as seguintes variáveis de ambiente ao arquivo `.env` (deixei o meu MONGO_URI para facilitar o teste):
+Adicione as seguintes variáveis de ambiente ao arquivo `.env`:
 
 ```
- MONGO_URI="mongodb+srv://fabiano:fabiano@app.4x3lw9q.mongodb.net/?retryWrites=true&w=majority&appName=app"
- MONGO_URI_TEST="mongodb+srv://fabiano:fabiano@app.4x3lw9q.mongodb.net/?retryWrites=true&w=majority&appName=app"
+ MONGO_URI=""
+ MONGO_URI_TEST=""
  PORT=3001
  JWT_SECRET="mysecretkey"
  JWT_EXPIRATION="1d"
