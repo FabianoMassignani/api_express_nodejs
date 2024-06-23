@@ -13,22 +13,35 @@ class UserController {
 
     const user = await this.userService.create(body);
 
-    return res.status(201).json({ data: user, message: "Criado com sucesso" });
+    return res.status(201).json({ user: user, message: "Criado com sucesso" });
+  };
+
+  getById = async (req: Request, res: Response): Promise<Response> => {
+    const { id } = req.params;
+
+    const user = await this.userService.getById(id);
+
+    return res.status(200).json({ user: user });
   };
 
   getAll = async (req: Request, res: Response): Promise<Response> => {
-    const users = await this.userService.getAll();
+    const { limit, page, search } = req.query as {
+      limit: string;
+      page: string;
+      search: string;
+    };
 
-    return res.status(200).json({ data: users });
+    const { users, total } = await this.userService.getAll(limit, page, search);
+
+    return res.status(200).json({ users: users, total: total });
   };
 
   update = async (req: Request, res: Response): Promise<Response> => {
-    const { id } = req.params;
     const { body } = req;
 
-    const user = await this.userService.update(id, body);
+    const user = await this.userService.update(body);
 
-    return res.status(201).json({ data: user, message: "Editado com sucesso" });
+    return res.status(201).json({ user: user, message: "Editado com sucesso" });
   };
 
   delete = async (req: Request, res: Response): Promise<Response> => {

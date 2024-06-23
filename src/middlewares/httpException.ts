@@ -13,7 +13,7 @@ const handleHttpException = (
   if (error instanceof HttpException) {
     exception = error;
   } else {
-   // console.error(error);
+    console.error(error);
 
     exception = new InternalException(
       "Erro interno do servidor.",

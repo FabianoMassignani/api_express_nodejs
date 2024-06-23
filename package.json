@@ -3,8 +3,11 @@
   "version": "1.0.0",
   "main": "index.js",
   "scripts": {
-    "start": "set NODE_ENV=dev && node dist/index.js",
-    "test": "set NODE_ENV=test && jest"
+    "start": "node dist/index.js",
+    "build": "tsc",
+    "prod": "npm run build && npm run start",
+    "dev": "ts-node-dev src/index.ts",
+    "test": "jest"
   },
   "jest": {
     "testEnvironment": "node",
@@ -31,12 +34,10 @@
   "dependencies": {
     "@types/cors": "^2.8.17",
     "bcrypt": "^5.1.1",
-    "bull": "^4.12.9",
     "cors": "^2.8.5",
     "dotenv": "^16.4.5",
     "express": "^4.19.2",
     "express-rate-limit": "^7.3.0",
-    "express-validator": "^7.1.0",
     "helmet": "^7.1.0",
     "jsonwebtoken": "^9.0.2",
     "mongoose": "^8.3.5"
@@ -58,6 +59,7 @@
     "supertest": "^7.0.0",
     "ts-jest": "^29.1.4",
     "ts-node": "^10.9.2",
+    "ts-node-dev": "^2.0.0",
     "typescript": "^5.4.5",
     "typescript-eslint": "^7.11.0"
   }

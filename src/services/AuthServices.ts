@@ -33,11 +33,12 @@ class AuthServices {
     }
 
     const accessToken = generateToken({
-      sub: user.id,
+      sub: user._id,
       username: user.username,
     });
 
     const data: UserLogin = {
+      _id: user._id,
       username: user.username,
       email: user.email,
       role: user.role,

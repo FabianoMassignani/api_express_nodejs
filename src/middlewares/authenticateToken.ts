@@ -1,10 +1,14 @@
 import { Request, Response, NextFunction } from "express";
-import { verify } from "jsonwebtoken";
-import { BadRequest, NotFound } from "../exceptions";
+import { verify, JwtPayload, TokenExpiredError } from "jsonwebtoken";
+import { NotUnauthorized, NotFound } from "../exceptions";
 import { ErrorCode } from "../exceptions/root";
 
+interface AuthenticatedRequest extends Request {
+  user?: JwtPayload;
+}
+
 const authenticateToken = (
-  request: Request,
+  request: AuthenticatedRequest,
   _response: Response,
   next: NextFunction
 ): Promise<any> | void => {
@@ -16,11 +20,21 @@ const authenticateToken = (
 
   const [, token] = authHeader.split(" ");
 
-  const user = verify(token, String(process.env.JWT_SECRET));
+  try {
+    const user = verify(token, String(process.env.JWT_SECRET));
 
-  if (user) return next();
+    if (user) {
+      request.user = user as JwtPayload;
 
-  throw new BadRequest("Token inválido", ErrorCode.BAD_REQUEST);
+      return next();
+    }
+  } catch (error) {
+    if (error instanceof TokenExpiredError) {
+      next(new NotUnauthorized("Token expirado", ErrorCode.UNAUTHORIZED));
+    } else {
+      next(error);
+    }
+  }
 };
 
 export default authenticateToken;

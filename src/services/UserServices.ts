@@ -9,6 +9,7 @@ import {
 } from "../utils";
 import {
   CreateUserDto,
+  UpdateUserDto,
   UserLogin,
   User,
 } from "../interfaces/user/user.interface";
@@ -20,14 +21,50 @@ class UserService {
     this.userRepository = userRepository;
   }
 
-  async getAll(): Promise<User[]> {
-    const users = await this.userRepository.getAll();
+  async getById(id: string): Promise<User> {
+    if (!id) {
+      throw new BadRequest("Id não informado", ErrorCode.BAD_REQUEST);
+    }
 
-    return users;
+    const user = await this.userRepository.findById(id);
+
+    if (!user) {
+      throw new NotFound("Usuário", ErrorCode.NOT_FOUND);
+    }
+
+    return user;
+  }
+
+  async getAll(
+    limit: string,
+    page: string,
+    search: string
+  ): Promise<{ users: User[]; total: number }> {
+    if (!limit) {
+      throw new BadRequest("Limit não informado", ErrorCode.BAD_REQUEST);
+    }
+
+    if (!page) {
+      throw new BadRequest("Page não informado", ErrorCode.BAD_REQUEST);
+    }
+
+    const users = await this.userRepository.getAll(
+      parseInt(limit),
+      parseInt(page),
+      search
+    );
+
+    const total = await this.userRepository.contUsers();
+
+    return { users, total };
   }
 
   async create(data: CreateUserDto): Promise<User> {
-    const { email, password, username, active, role } = data;
+    const { email, password, username, active = true, role } = data;
+
+    if (!username) {
+      throw new BadRequest("Nome não informado", ErrorCode.BAD_REQUEST);
+    }
 
     if (!email) {
       throw new BadRequest("Email não informado", ErrorCode.BAD_REQUEST);
@@ -37,12 +74,13 @@ class UserService {
       throw new BadRequest("Senha não informada", ErrorCode.BAD_REQUEST);
     }
 
-    if (!username) {
-      throw new BadRequest("Nome não informado", ErrorCode.BAD_REQUEST);
+    if (!role.length) {
+      throw new BadRequest("Papel não informado", ErrorCode.BAD_REQUEST);
     }
 
-    if (!verifyRole(role)) {
-      throw new BadRequest("Role inválida", ErrorCode.BAD_REQUEST);
+    for (const r of role) {
+      if (!verifyRole(r))
+        throw new BadRequest("Papel não permitido", ErrorCode.BAD_REQUEST);
     }
 
     if (typeof active !== "boolean") {
@@ -84,11 +122,12 @@ class UserService {
     }
 
     const accessToken = generateToken({
-      sub: user.id,
+      sub: user._id,
       username: user.username,
     });
 
     const data: UserLogin = {
+      _id: user._id,
       username: user.username,
       email: user.email,
       role: user.role,
@@ -99,18 +138,53 @@ class UserService {
     return data;
   }
 
-  async update(id: string, data: CreateUserDto): Promise<User> {
-    if (!id) {
+  async update(data: UpdateUserDto): Promise<User> {
+    const { _id } = data;
+
+    if (!_id) {
       throw new BadRequest("Id não informado", ErrorCode.BAD_REQUEST);
     }
 
-    const user = await this.userRepository.update(id, data);
+    const user = await this.userRepository.findById(_id);
 
     if (!user) {
       throw new NotFound("Usuário", ErrorCode.NOT_FOUND);
     }
 
-    return user;
+    const { email, username, active, role } = data;
+
+    if (!username) {
+      throw new BadRequest("Nome não informado", ErrorCode.BAD_REQUEST);
+    }
+
+    if (!email) {
+      throw new BadRequest("Email não informado", ErrorCode.BAD_REQUEST);
+    }
+
+    if (!role) {
+      throw new BadRequest("Papel não informado", ErrorCode.BAD_REQUEST);
+    }
+
+    if (!role.length) {
+      throw new BadRequest("Papel não informado", ErrorCode.BAD_REQUEST);
+    }
+
+    for (const r of role) {
+      if (!verifyRole(r))
+        throw new BadRequest("Papel não permitido", ErrorCode.BAD_REQUEST);
+    }
+
+    if (typeof active !== "boolean") {
+      throw new BadRequest("Ativo não informado", ErrorCode.BAD_REQUEST);
+    }
+
+    const userUpdate = await this.userRepository.update(data);
+
+    if (!userUpdate) {
+      throw new NotFound("Usuário", ErrorCode.NOT_FOUND);
+    }
+
+    return userUpdate;
   }
 
   async delete(id: string): Promise<User> {

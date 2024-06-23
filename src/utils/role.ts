@@ -1,8 +1,8 @@
-export enum Role {
-  Manager = "manager",
-  Client = "client",
-}
+import { Roles } from "../interfaces/user/user.interface";
 
-export const verifyRole = (role: string): boolean => {
-  return Object.values(Role).includes(role as Role);
+export const verifyRole = (role: String): boolean => {
+  if (role === Roles.ADMIN || role === Roles.USER) {
+    return true;
+  }
+  return false;
 };

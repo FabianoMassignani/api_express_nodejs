@@ -1,7 +1,7 @@
 import { sign, SignOptions } from "jsonwebtoken";
 import { BadRequest } from "../../exceptions/bad-request";
 import { ErrorCode } from "../../exceptions/root";
-import { JWT_SECRET } from "../../config/secrets";
+import { JWT_SECRET, JWT_EXPIRATION } from "../../config/secrets";
 
 export const generateToken = (
   payload: object,
@@ -9,7 +9,7 @@ export const generateToken = (
 ): string => {
   try {
     const token = sign(payload, JWT_SECRET, {
-      expiresIn: "1h",
+      expiresIn: JWT_EXPIRATION,
       ...options,
     });
 

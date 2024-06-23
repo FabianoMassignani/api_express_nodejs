@@ -1,6 +1,9 @@
 import { Router } from "express";
 import asyncMethod from "../middlewares/asyncMethod";
 import UserController from "../controllers/userController";
+import authenticateToken from "../middlewares/authenticateToken";
+import { checkRole } from "../middlewares/checkRole";
+import { Roles } from "../interfaces/user/user.interface";
 
 export default class UserRouter {
   private router: Router;
@@ -10,10 +13,28 @@ export default class UserRouter {
     this.router = router;
     this.controller = controller;
 
-    this.router.post("/register", asyncMethod(this.controller.register));
-    this.router.get("/", asyncMethod(this.controller.getAll));
-    this.router.put("/", asyncMethod(this.controller.update));
-    this.router.delete("/:id", asyncMethod(this.controller.delete));
+    this.router.get(
+      "/getById/:id",
+      authenticateToken,
+      [authenticateToken, checkRole([Roles.ADMIN, Roles.USER])],
+      asyncMethod(this.controller.getById)
+    );
+    this.router.get(
+      "/getAll",
+      [authenticateToken, checkRole([Roles.ADMIN, Roles.USER])],
+      asyncMethod(this.controller.getAll)
+    );
+    this.router.post("/", asyncMethod(this.controller.register));
+    this.router.put(
+      "/",
+      [authenticateToken, checkRole([Roles.ADMIN])],
+      asyncMethod(this.controller.update)
+    );
+    this.router.delete(
+      "/:id",
+      [authenticateToken, checkRole([Roles.ADMIN])],
+      asyncMethod(this.controller.delete)
+    );
   }
 
   get getRouter() {
